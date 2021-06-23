@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from "./router";
 import less from 'less';
 import { Button, Tabbar, TabbarItem } from 'vant';
+import "./config/rem";
 
 const app = createApp(App);
 
