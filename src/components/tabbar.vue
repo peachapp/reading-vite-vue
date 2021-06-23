@@ -1,15 +1,42 @@
 <template>
-  <van-tabbar class="vantabbar">
-    <van-tabbar-item icon="home-o">书架</van-tabbar-item>
-    <van-tabbar-item icon="search">发现</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">书城</van-tabbar-item>
-    <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
+  <van-tabbar
+    class="vantabbar"
+    route
+    active-color="#0ba360"
+    inactive-color="#666"
+    v-model="activeKey"
+  >
+    <van-tabbar-item to="/bookshelf">
+      <template #icon>
+        <span class="iconfont icon-shujia vantabbar-icon"></span>
+      </template>
+      <div class="vantabbar-text">书架</div>
+    </van-tabbar-item>
+    <van-tabbar-item to="/find">
+      <template #icon>
+        <span class="iconfont icon-faxian vantabbar-icon"></span>
+      </template>
+      <div class="vantabbar-text">发现</div>
+    </van-tabbar-item>
+    <van-tabbar-item to="/bookcity">
+      <template #icon>
+        <span class="iconfont icon-shucheng vantabbar-icon"></span>
+      </template>
+      <div class="vantabbar-text">书城</div>
+    </van-tabbar-item>
+    <van-tabbar-item to="/mycenter">
+      <template #icon>
+        <span class="iconfont icon-wode vantabbar-icon"></span>
+      </template>
+      <div class="vantabbar-text">我的</div>
+    </van-tabbar-item>
   </van-tabbar>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
 
-<style lang="less" scoped>
-.vantabbar {
-}
-</style>
+const activeKey = ref(0);
+</script>
+
+<style lang="less" scoped></style>

@@ -8,12 +8,20 @@
 </script>
 
 <style lang="less">
+@import "./assets/reset/reset.css";
+@import "./assets/iconfont/iconfont.css";
+
+body,
+html {
+  height: 100%;
+}
+
 #app {
+  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-size: 16px;
+  color: #333;
 }
 </style>
