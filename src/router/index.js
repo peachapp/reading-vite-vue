@@ -51,6 +51,15 @@ const routes = [
       },
     ]
   },
+  // 测试
+  {
+    path: "/test",
+    name: "test",
+    meta: {
+      title: "测试"
+    },
+    component: () => import("../pages/test/index.vue"),
+  },
 ];
 
 const router = createRouter({
