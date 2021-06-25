@@ -1,6 +1,6 @@
 <template>
   <h1>{{ msg }}</h1>
-
+  {{opacity}}
   <p>
     <a href="https://vitejs.dev/guide/features.html" target="_blank">
       Vite Documentation
@@ -9,7 +9,7 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <button type="button" @click="state.count++">count is: {{ state.count }}</button>
+  <button type="button" @click="state.count++;opacity+=0.1">count is: {{ state.count }}</button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -17,17 +17,19 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue'
+import { defineProps, reactive,ref } from 'vue'
 
 defineProps({
   msg: String
 })
 
 const state = reactive({ count: 0 })
+const opacity = ref(0);
 </script>
 
 <style scoped>
 a {
   color: #42b983;
+  opacity: v-bind(opacity);
 }
 </style>
