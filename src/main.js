@@ -5,6 +5,9 @@ import less from 'less';
 import { Button, Tabbar, TabbarItem } from 'vant';
 import "./config/rem";
 
+// iconfont
+import "./assets/iconfont/iconfont";
+
 // turn
 import "./assets/turn/jquery.min.1.7";
 import "./assets/turn/lib/turn.min";
