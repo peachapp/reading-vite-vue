@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from "./router";
 import less from 'less';
-import { Button, Tabbar, TabbarItem } from 'vant';
+import { Button, Tabbar, TabbarItem, NavBar, Search, PullRefresh } from 'vant';
 import "./config/rem";
 
 // iconfont
@@ -22,5 +22,8 @@ app.use(less);
 app.use(Button);
 app.use(Tabbar);
 app.use(TabbarItem);
+app.use(NavBar);
+app.use(Search);
+app.use(PullRefresh);
 
 app.mount('#app');

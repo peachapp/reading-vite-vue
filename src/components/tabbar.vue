@@ -2,8 +2,8 @@
   <van-tabbar
     class="vantabbar"
     route
-    active-color="#0ba360"
-    inactive-color="#666"
+    active-color="#12ab76"
+    inactive-color="#999"
     v-model="activeKey"
   >
     <van-tabbar-item to="/bookshelf">
