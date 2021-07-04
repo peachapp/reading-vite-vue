@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from "vue";
-import refresh from "../../components/refresh.vue";
+import refresh from "@/components/refresh.vue";
 
 let loading = ref(false);
 

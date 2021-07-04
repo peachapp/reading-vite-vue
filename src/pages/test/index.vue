@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import eBook from "../../components/e-book.vue";
+import eBook from "@/components/e-book.vue";
 </script>
 
 <style lang="less" scoped>
 .container {
   height: 100%;
-  }
+}
 </style>

@@ -7,7 +7,7 @@ const routes = [
   },
   {
     path: "/",
-    component: () => import("../components/home.vue"),
+    component: () => import("@/components/home.vue"),
     children: [
       // 书架
       {
@@ -17,7 +17,7 @@ const routes = [
           title: "书架",
           keepAlive: true
         },
-        component: () => import("../pages/bookshelf/index.vue"),
+        component: () => import("@/pages/bookshelf/index.vue"),
       },
       // 发现
       {
@@ -27,7 +27,7 @@ const routes = [
           title: "发现",
           keepAlive: true
         },
-        component: () => import("../pages/find/index.vue"),
+        component: () => import("@/pages/find/index.vue"),
       },
       // 书城
       {
@@ -37,7 +37,7 @@ const routes = [
           title: "书城",
           keepAlive: true
         },
-        component: () => import("../pages/bookcity/index.vue"),
+        component: () => import("@/pages/bookcity/index.vue"),
       },
       // 我的
       {
@@ -47,7 +47,7 @@ const routes = [
           title: "我的",
           keepAlive: true
         },
-        component: () => import("../pages/mycenter/index.vue"),
+        component: () => import("@/pages/mycenter/index.vue"),
       },
     ]
   },
@@ -58,7 +58,7 @@ const routes = [
     meta: {
       title: "测试"
     },
-    component: () => import("../pages/test/index.vue"),
+    component: () => import("@/pages/test/index.vue"),
   },
 ];
 

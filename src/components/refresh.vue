@@ -2,7 +2,7 @@
   <van-pull-refresh style="height: 100%" v-model="loading" @refresh="refresh">
     <!-- 加载提示 -->
     <!-- <template #loading>
-      <img class="loading-img" src="../assets/images/refresh.gif" />
+      <img class="loading-img" src="@/assets/images/refresh.gif" />
     </template> -->
 
     <slot></slot>
