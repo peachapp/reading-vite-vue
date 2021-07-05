@@ -8,9 +8,6 @@
 </script>
 
 <style lang="less">
-// @import "./assets/reset/reset.css";
-@import "./assets/iconfont/iconfont.css";
-
 body,
 html {
   height: 100%;
@@ -22,6 +19,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: @fs14;
-  color: @colorDefault;
+  color: @color333;
 }
 </style>
