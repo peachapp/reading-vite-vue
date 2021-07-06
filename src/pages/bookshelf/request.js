@@ -1,11 +1,11 @@
-// import service from '@/axios/request';
-// import api from "@/config/api";
+import service from "@/axios/request";
+import api from "@/config/api";
 
-// 查询首页配置
-// export const getConfig = data => {
-//   return service({
-//     url: api.cConfig.getConfig,
-//     method: 'get',
-//     params: data
-//   })
-// };
+// 书籍的全部分类
+export const getCategoryChannel = data => {
+  return service({
+    url: api.find.getCategoryChannel,
+    method: "get",
+    params: data
+  })
+};

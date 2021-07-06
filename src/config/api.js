@@ -8,7 +8,7 @@ export default {
   },
   // 发现
   find: {
-
+    "getCategoryChannel": "/api/app/open/api/category/getCategoryChannel"
   },
   // 书城
   bookcity: {

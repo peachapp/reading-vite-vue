@@ -5,6 +5,9 @@ import styleImport from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    'process.env': {}
+  },
   // 定义相对路径，@代替
   resolve: {
     alias: {
@@ -35,4 +38,14 @@ export default defineConfig({
       }
     }
   },
+  // 配置跨域
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://yuenov.com:15555",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "")
+      }
+    }
+  }
 })

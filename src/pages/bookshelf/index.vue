@@ -17,10 +17,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import refresh from "@/components/refresh.vue";
+import { getCategoryChannel } from "./request";
 
 let loading = ref(false);
+
+const onGetCategoryChannel = async () => {
+  try {
+    const res = await getCategoryChannel();
+    console.log("getCategoryChannel res", res);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // 输入框获取焦点
 const onFocus = () => {
@@ -32,6 +42,11 @@ const onRefresh = () => {
     loading = false;
   }, 1000);
 };
+
+onMounted(() => {
+  console.log("onMounted");
+  onGetCategoryChannel();
+});
 </script>
 
 <style lang="less" scoped>
