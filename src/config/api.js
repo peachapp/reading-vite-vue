@@ -1,6 +1,6 @@
 export default {
   base: {
-    login: '/api/login',
+    login: "/api/login",
   },
   // 书架
   bookshelf: {
@@ -8,7 +8,8 @@ export default {
   },
   // 发现
   find: {
-    "getCategoryChannel": "/api/app/open/api/category/getCategoryChannel"
+    // 书籍的全部分类
+    getCategoryChannel: "/api/app/open/api/category/getCategoryChannel"
   },
   // 书城
   bookcity: {

@@ -12,11 +12,11 @@ const service = axios.create({
 service.interceptors.request.use(response => {
   // if (response.headers.authorization) {
   //   const authorization = response.headers.authorization;
-  //   if (authorization.startsWith('Bearer ') || authorization.startsWith('bearer ')) {
-  //     store.dispatch('SetToken', authorization);
+  //   if (authorization.startsWith("Bearer ") || authorization.startsWith("bearer ")) {
+  //     store.dispatch("SetToken", authorization);
   //   };
   // } else if (!response.headers.authorization) {
-  //   response.headers.authorization = localStorage.getItem('TOKEN') ? 'Bearer ' + localStorage.getItem('TOKEN') : "";
+  //   response.headers.authorization = localStorage.getItem("TOKEN") ? "Bearer " + localStorage.getItem("TOKEN") : "";
   // };
 
   if (response.data && response.data.meta && response.data.meta.success === false) {

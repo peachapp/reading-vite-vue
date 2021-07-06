@@ -1,17 +1,17 @@
-import path from 'path';
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import styleImport from 'vite-plugin-style-import';
+import path from "path";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import styleImport from "vite-plugin-style-import";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    'process.env': {}
+    "process.env": {}
   },
   // 定义相对路径，@代替
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      "@": path.resolve(__dirname, "src"),
     },
   },
   plugins: [
@@ -20,7 +20,7 @@ export default defineConfig({
     styleImport({
       libs: [
         {
-          libraryName: 'vant',
+          libraryName: "vant",
           esModule: true,
           resolveStyle: (name) => `vant/es/${name}/style`,
         },
@@ -32,7 +32,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          hack: `true; @import (reference) "${path.resolve('src/global.less')}";`,
+          hack: `true; @import (reference) "${path.resolve("src/global.less")}";`,
         },
         javascriptEnabled: true
       }

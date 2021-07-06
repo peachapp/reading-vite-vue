@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import eBook from "@/components/e-book.vue";
+import eBook from "@/components/eBook.vue";
 </script>
 
 <style lang="less" scoped>
