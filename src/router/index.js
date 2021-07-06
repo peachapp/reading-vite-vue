@@ -51,6 +51,16 @@ const routes = [
       },
     ]
   },
+  // 搜索
+  {
+    path: "/search",
+    name: "search",
+    meta: {
+      title: "搜索",
+      keepAlive: true
+    },
+    component: () => import("@/pages/search/index.vue"),
+  },
   // 测试
   {
     path: "/test",

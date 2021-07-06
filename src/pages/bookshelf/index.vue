@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <van-nav-bar fixed title="书架" />
+    <van-nav-bar class="page-title" fixed title="书架" />
     <div class="page-content">
       <van-search
         class="page-search"
@@ -19,24 +19,18 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import refresh from "@/components/refresh.vue";
-import { getCategoryChannel } from "./request";
+import router from "@/router/index";
 
 let loading = ref(false);
 
-const onGetCategoryChannel = async () => {
-  try {
-    const res = await getCategoryChannel();
-    console.log("getCategoryChannel res", res);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // 输入框获取焦点
 const onFocus = () => {
-  console.log("focus");
+  router.push({
+    name: "search",
+  });
 };
 
+// 下拉刷新
 const onRefresh = () => {
   setTimeout(() => {
     loading = false;
@@ -45,7 +39,6 @@ const onRefresh = () => {
 
 onMounted(() => {
   console.log("onMounted");
-  onGetCategoryChannel();
 });
 </script>
 
@@ -64,6 +57,7 @@ onMounted(() => {
 }
 
 .page-refresh {
+  padding: 0 12px;
   flex: 1;
 }
 </style>
