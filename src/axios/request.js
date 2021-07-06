@@ -1,10 +1,11 @@
 import axios from "axios";
 import { Dialog } from "vant";
+console.log('import.meta.env', import.meta.env);
 
 
 /****** 创建axios实例 ******/
 const service = axios.create({
-  baseURL: process.env.BASE_URL, // api的base_url
+  baseURL: import.meta.env.BASE_URL, // api的base_url
   timeout: 60000 // 请求超时时间
 });
 

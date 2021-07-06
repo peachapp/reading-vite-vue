@@ -5,9 +5,7 @@ import styleImport from "vite-plugin-style-import";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    "process.env": {}
-  },
+  base: "./",
   // 定义相对路径，@代替
   resolve: {
     alias: {
