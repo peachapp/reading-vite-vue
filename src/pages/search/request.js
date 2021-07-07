@@ -1,10 +1,10 @@
 import service from "@/axios/request";
 import api from "@/config/api";
 
-// 书籍的全部分类
-export const getCategoryChannel = data => {
+// 搜索书籍
+export const search = data => {
   return service({
-    url: api.find.getCategoryChannel,
+    url: api.bookshelf.search,
     method: "get",
     params: data
   });

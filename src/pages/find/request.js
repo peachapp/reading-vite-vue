@@ -7,5 +7,5 @@ export const getCategoryChannel = data => {
     url: api.find.getCategoryChannel,
     method: "get",
     params: data
-  })
+  });
 };
