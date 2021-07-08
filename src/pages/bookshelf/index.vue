@@ -4,8 +4,9 @@
     <div class="page-content">
       <van-search
         class="page-search"
+        readonly
         placeholder="请输入搜索关键词"
-        @focus="onFocus"
+        @click="onToSearch"
       />
       <div class="page-refresh">
         <refresh :loading="loading" @refresh="onRefresh">
@@ -23,8 +24,8 @@ import router from "@/router/index";
 
 let loading = ref(false);
 
-// 输入框获取焦点
-const onFocus = () => {
+// 跳转到搜索页
+const onToSearch = () => {
   router.push({
     name: "search",
   });
@@ -32,8 +33,9 @@ const onFocus = () => {
 
 // 下拉刷新
 const onRefresh = () => {
+  loading.value = true;
   setTimeout(() => {
-    loading = false;
+    loading.value = false;
   }, 1000);
 };
 

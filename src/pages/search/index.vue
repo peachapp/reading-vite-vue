@@ -84,7 +84,7 @@ const onSearch = async () => {
   box-sizing: border-box;
 }
 
-/deep/ .page-title {
+:deep(.page-title) {
   .van-nav-bar__title {
     flex: 1;
     max-width: 72%;

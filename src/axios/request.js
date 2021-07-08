@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Dialog } from "vant";
-console.log("import.meta.env", import.meta.env);
+// console.log("import.meta.env", import.meta.env);
 
 
 /****** 创建axios实例 ******/

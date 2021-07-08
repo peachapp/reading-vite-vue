@@ -38,6 +38,7 @@ export default defineConfig({
   },
   // 配置跨域
   server: {
+    host: "0.0.0.0",
     proxy: {
       "/api": {
         target: "http://yuenov.com:15555",

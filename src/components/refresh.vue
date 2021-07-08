@@ -9,8 +9,6 @@
   </van-pull-refresh>
 </template>
 <script setup>
-import { defineProps, defineEmit } from "vue";
-
 defineProps({
   loading: Boolean,
 });
