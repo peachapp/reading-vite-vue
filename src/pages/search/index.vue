@@ -37,6 +37,7 @@
             v-for="(item, index) in searchResList"
             :key="index"
             class="res-item"
+            @click="toBookDetail(item.bookId)"
           >
             <coverImage class="res-image" :path="item.coverImg" />
             <div class="res-content">
@@ -63,6 +64,7 @@
             v-for="(item, index) in hotSearchList"
             :key="index"
             class="hot-item"
+            @click="toBookDetail(item.bookId)"
           >
             <div class="hot-number" :class="{ 'hot-number-active': index < 3 }">
               {{ index + 1 }}
@@ -83,11 +85,12 @@
 <script setup>
 import { ref, computed, reactive } from "vue";
 import { useStore } from "vuex";
-import router from "@/router/index";
+import { useRouter } from "vue-router";
 import coverImage from "@/components/coverImage.vue";
 import { search } from "./request";
 
 const store = useStore();
+const router = useRouter();
 
 let searchFlag = ref(false);
 
@@ -147,6 +150,14 @@ const onSearch = () => {
   searchState.pageNum = 1;
   searchState.finished = false;
   onGetSearchResList();
+};
+
+// 查看书籍详情
+const toBookDetail = (bookId) => {
+  router.push({
+    name: "bookdetail",
+    params: { bookId },
+  });
 };
 </script>
 

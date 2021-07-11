@@ -16,7 +16,8 @@ export default {
   },
   // 书城
   bookcity: {
-
+    // 书籍详情
+    getDetail: "/api/app/open/api/book/getDetail"
   },
   // 其他
   other: {

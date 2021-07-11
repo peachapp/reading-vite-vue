@@ -20,8 +20,10 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import refresh from "@/components/refresh.vue";
-import router from "@/router/index";
+
+const router = useRouter();
 
 let loading = ref(false);
 
@@ -47,7 +49,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-container {
-  padding-top: 46px;
+  padding-top: 46px; // van-nav-bar height: 46px;
   height: 100%;
   background: @coloorBg;
   box-sizing: border-box;
