@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // import less from "less";
-import { Button, Tabbar, TabbarItem, NavBar, Search, PullRefresh } from "vant";
+import { Button, Tabbar, TabbarItem, NavBar, Search, PullRefresh, Image as VanImage, Empty, List, Tag } from "vant";
 import "./config/rem";
 
 const app = createApp(App);
@@ -20,5 +20,9 @@ app.use(TabbarItem);
 app.use(NavBar);
 app.use(Search);
 app.use(PullRefresh);
+app.use(VanImage);
+app.use(Empty);
+app.use(List);
+app.use(Tag);
 
 app.mount("#app");

@@ -4,6 +4,7 @@
     <div class="page-content">
       <van-search
         class="page-search"
+        shape="round"
         readonly
         placeholder="请输入搜索关键词"
         @click="onToSearch"
@@ -59,7 +60,7 @@ onMounted(() => {
 }
 
 .page-refresh {
-  padding: 0 12px;
+  padding: 0 @s12;
   flex: 1;
 }
 </style>

@@ -3,6 +3,7 @@ import { getAppConfig } from "./request";
 
 export default createStore({
   state: {
+    target: "http://yuenov.com:15555/",
     categories: [], // 书籍默认的分类列表
     hotSearch: [], // 热搜书籍列表
   },
