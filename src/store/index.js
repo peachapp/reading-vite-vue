@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { getAppConfig } from "./request";
+import { getAppConfig } from "@/axios";
 
 export default createStore({
   state: {
