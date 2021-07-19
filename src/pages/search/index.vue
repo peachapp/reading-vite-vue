@@ -37,6 +37,7 @@
 					color="#ccc"
 					text-color="#333"
 					:key="index"
+					@click="onSearchByHistory(item)"
 				>
 					{{ item }}
 				</van-tag>
@@ -187,6 +188,12 @@ const onSearch = () => {
 	onGetSearchResList();
 };
 
+// 通过历史搜索关键字搜索
+const onSearchByHistory = (value) => {
+	searchState.keyWord = value;
+	onSearch();
+};
+
 // 加载更多
 const onLoadList = () => {
 	searchState.loading = true;
@@ -264,7 +271,7 @@ const toBookDetail = (bookId) => {
 	.res-image {
 		margin-right: @s12;
 		width: 80px;
-		height: 120px;
+		height: 110px;
 		flex-shrink: 0;
 		border-radius: 5px;
 		overflow: hidden;
@@ -280,8 +287,8 @@ const toBookDetail = (bookId) => {
 	.res-author {
 		margin-bottom: @s6;
 		font-size: @fs12;
-		color: @color999;
 		font-weight: 600;
+		color: @color999;
 	}
 
 	.res-desc {
