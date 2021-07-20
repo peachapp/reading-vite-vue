@@ -167,9 +167,6 @@ const onGetDetail = debounce(async () => {
 <style lang="less" scoped>
 .page-container {
 	padding-bottom: 50px; // van-tabbar height: 50px;
-	height: 100%;
-	background: @coloorBg;
-	box-sizing: border-box;
 }
 
 .page-content {

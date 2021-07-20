@@ -60,7 +60,7 @@
 						v-for="(item, index) in searchResList"
 						:key="index"
 						class="res-item"
-						@click="toBookDetail(item.bookId)"
+						@click="onToBookDetail(item.bookId)"
 					>
 						<coverImage class="res-image" :path="item.coverImg" />
 						<div class="res-content">
@@ -87,7 +87,7 @@
 						v-for="(item, index) in hotSearchList"
 						:key="index"
 						class="hot-item"
-						@click="toBookDetail(item.bookId)"
+						@click="onToBookDetail(item.bookId)"
 					>
 						<div class="hot-number" :class="{ 'hot-number-active': index < 3 }">
 							{{ index + 1 }}
@@ -213,7 +213,7 @@ watch(keyWordsHistory, (newVal) => {
 });
 
 // 查看书籍详情
-const toBookDetail = (bookId) => {
+const onToBookDetail = (bookId) => {
 	router.push({
 		name: 'bookdetail',
 		params: { bookId },
@@ -224,9 +224,6 @@ const toBookDetail = (bookId) => {
 <style lang="less" scoped>
 .page-container {
 	padding-top: 46px; // van-nav-bar height: 46px;
-	height: 100%;
-	background: @coloorBg;
-	box-sizing: border-box;
 }
 
 :deep(.page-title) {
@@ -236,12 +233,13 @@ const toBookDetail = (bookId) => {
 	}
 	.van-icon,
 	.van-nav-bar__text {
-		color: @color333;
+		color: @colorfff;
 	}
 }
 
 .page-search {
 	padding: @s6 0;
+	background-color: transparent;
 }
 
 .page-content {
