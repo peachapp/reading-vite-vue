@@ -42,4 +42,22 @@ export const getDetail = data => {
   });
 };
 
+// 书籍目录
+export const getChapterByBookId = data => {
+  return service({
+    url: api.bookcity.getChapterByBookId,
+    method: "get",
+    params: data
+  });
+}
+
+// 书籍章节下载
+export const getBookContent = data => {
+  return service({
+    url: api.bookcity.getBookContent,
+    method: "post",
+    data
+  });
+}
+
 

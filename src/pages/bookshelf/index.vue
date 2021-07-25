@@ -18,6 +18,7 @@
 						class="bookshelf-item"
 						v-for="(item, index) in historyBookshelfList"
 						:key="index"
+						@click="onToReading(item.bookId)"
 					>
 						<coverImage class="bookshelf-image" :path="item.coverImg" />
 						<div class="bookshelf-title">
@@ -67,6 +68,14 @@ const onToSearch = () => {
 const onTobookcity = () => {
 	router.push({
 		name: 'bookcity',
+	});
+};
+
+// 跳转到reading
+const onToReading = (bookId) => {
+	router.push({
+		name: 'reading',
+		params: { bookId },
 	});
 };
 

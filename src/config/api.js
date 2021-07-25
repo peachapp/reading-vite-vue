@@ -17,7 +17,11 @@ export default {
   // 书城
   bookcity: {
     // 书籍详情
-    getDetail: "/api/app/open/api/book/getDetail"
+    getDetail: "/api/app/open/api/book/getDetail",
+    // 书籍目录
+    getChapterByBookId: "/api/app/open/api/chapter/getByBookId",
+    // 书籍章节下载
+    getBookContent: "/api/app/open/api/chapter/get",
   },
   // 其他
   other: {

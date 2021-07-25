@@ -71,6 +71,16 @@ const routes = [
     },
     component: () => import("@/pages/bookdetail/index.vue"),
   },
+  // reading
+  {
+    path: "/reading/:bookId",
+    name: "reading",
+    meta: {
+      title: "阅读",
+      keepAlive: true
+    },
+    component: () => import("@/pages/reading/index.vue"),
+  },
   // 测试
   {
     path: "/test",
