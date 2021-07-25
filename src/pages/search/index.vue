@@ -34,7 +34,7 @@
 					class="keywords-item"
 					v-for="(item, index) in keyWordsHistory"
 					round
-					color="#ccc"
+					color="#e7e8ea"
 					text-color="#333"
 					:key="index"
 					@click="onSearchByHistory(item)"
@@ -152,6 +152,12 @@ const onGetSearchResList = debounce(async () => {
 		});
 		searchState.searchLoading = false;
 		searchState.loading = false;
+		// 如果有搜索关键字，更新搜索历史
+		if (searchState.keyWord) {
+			if (!keyWordsHistory.value.includes(searchState.keyWord)) {
+				keyWordsHistory.value.push(searchState.keyWord);
+			}
+		}
 		if (res.result.code === 0) {
 			// 第一页，需要先将旧值清除掉
 			if (searchState.pageNum === 1) {
@@ -162,16 +168,6 @@ const onGetSearchResList = debounce(async () => {
 				searchState.pageNum = searchState.pageNum + 1;
 			} else {
 				searchState.finished = true;
-			}
-			// 如果有搜索关键字，更新搜索历史
-			if (searchState.keyWord) {
-				if (!keyWordsHistory.value.includes(searchState.keyWord)) {
-					keyWordsHistory.value.push(searchState.keyWord);
-					localStorage.setItem(
-						'keyWords',
-						JSON.stringify(keyWordsHistory.value),
-					);
-				}
 			}
 		}
 	} catch (error) {
@@ -202,14 +198,12 @@ const onLoadList = () => {
 
 // 清空搜索历史
 const onClearKeyWordsHistory = () => {
-	keyWordsHistory.value = [];
-	localStorage.setItem('keyWords', JSON.stringify(keyWordsHistory.value));
+	keyWordsHistory.value.splice(0, keyWordsHistory.value.length);
 };
 
 // 监听搜索历史，更新localStorage
-watch(keyWordsHistory, (newVal) => {
-	console.log('历史搜索变化了', newVal.value);
-	// localStorage.setItem('keyWords', JSON.stringify(newVal.value));
+watch(keyWordsHistory.value, (newValue) => {
+	localStorage.setItem('keyWords', JSON.stringify(newValue));
 });
 
 // 查看书籍详情
@@ -224,6 +218,7 @@ const onToBookDetail = (bookId) => {
 <style lang="less" scoped>
 .page-container {
 	padding-top: 46px; // van-nav-bar height: 46px;
+	background-color: @colorfff;
 }
 
 :deep(.page-title) {

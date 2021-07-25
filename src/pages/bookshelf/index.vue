@@ -9,12 +9,21 @@
 				placeholder="请输入搜索关键词"
 				@click="onToSearch"
 			/>
-			<div class="bookshelf">
+			<div class="bookshelf-container">
 				<div
-					v-if="keyWordsHistory && keyWordsHistory.length > 0"
+					v-if="historyBookshelfList && historyBookshelfList.length > 0"
 					class="bookshelf-notempty"
 				>
-					shujia
+					<div
+						class="bookshelf-item"
+						v-for="(item, index) in historyBookshelfList"
+						:key="index"
+					>
+						<coverImage class="bookshelf-image" :path="item.coverImg" />
+						<div class="bookshelf-title">
+							{{ item.title }}
+						</div>
+					</div>
 				</div>
 				<div v-else class="bookshelf-empty">
 					<div class="bookshelf-tips">
@@ -38,10 +47,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import coverImage from '@/components/coverImage.vue';
 
 const router = useRouter();
 
-// let loading = ref(false);
+// 书架
+const historyBookshelfList = ref(
+	JSON.parse(localStorage.getItem('bookshelfList')) || [],
+);
 
 // 跳转到搜索页
 const onToSearch = () => {
@@ -50,6 +63,7 @@ const onToSearch = () => {
 	});
 };
 
+// 跳转到书城
 const onTobookcity = () => {
 	router.push({
 		name: 'bookcity',
@@ -64,6 +78,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .page-container {
 	padding-top: 46px; // van-nav-bar height: 46px;
+	background-color: @colorfff;
 }
 
 .page-content {
@@ -72,9 +87,39 @@ onMounted(() => {
 	flex-direction: column;
 }
 
-.bookshelf {
+.bookshelf-container {
 	padding: 0 @s12;
 	flex: 1;
+}
+
+.bookshelf-notempty {
+	display: flex;
+	flex-wrap: wrap;
+
+	.bookshelf-item {
+		margin-right: @s24;
+		margin-bottom: @s12;
+		width: 100px;
+		&:nth-child(3n) {
+			margin-right: 0;
+		}
+	}
+
+	.bookshelf-image {
+		margin-bottom: @s6;
+		height: 120px;
+	}
+
+	.bookshelf-title {
+		margin-bottom: @s6;
+		font-size: @fs12;
+		font-weight: 600;
+		color: @color000;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		word-break: break-all;
+	}
 }
 
 .bookshelf-empty {
