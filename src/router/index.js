@@ -29,15 +29,15 @@ const routes = [
         },
         component: () => import("@/pages/find/index.vue"),
       },
-      // 书城
+      // 排行榜
       {
-        path: "/bookcity",
-        name: "bookcity",
+        path: "/bookranking",
+        name: "bookranking",
         meta: {
-          title: "书城",
+          title: "排行榜",
           keepAlive: true
         },
-        component: () => import("@/pages/bookcity/index.vue"),
+        component: () => import("@/pages/bookranking/index.vue"),
       },
       // 我的
       {

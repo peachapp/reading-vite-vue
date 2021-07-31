@@ -18,11 +18,11 @@
       </template>
       <div class="vantabbar-text">发现</div>
     </van-tabbar-item>
-    <van-tabbar-item to="/bookcity">
+    <van-tabbar-item to="/bookranking">
       <template #icon>
         <span class="iconfont icon-shucheng vantabbar-icon"></span>
       </template>
-      <div class="vantabbar-text">书城</div>
+      <div class="vantabbar-text">排行榜</div>
     </van-tabbar-item>
     <van-tabbar-item to="/mycenter">
       <template #icon>

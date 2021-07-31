@@ -1,5 +1,5 @@
 <template>
-  <div>书城</div>
+  <div>排行榜</div>
 </template>
 
 <script setup></script>
