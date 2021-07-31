@@ -4,8 +4,6 @@ export default {
   },
   // 书架
   bookshelf: {
-    // 批量检查书籍是否有更新
-    checkUpdate: "/api/app/open/api/book/checkUpdate",
     // 搜索书籍
     search: "/api/app/open/api/book/search"
   },
@@ -27,5 +25,8 @@ export default {
   other: {
     // 获取热门搜索，书籍默认分类等配置信息，通常是在每次开机时启动
     getAppConfig: "/api/app/open/api/system/getAppConfig"
-  }
+  },
+  // 追书神器
+  // 获取所有分类
+  getAllCategories: "/api/cats/lv2/statistics"
 };

@@ -60,4 +60,14 @@ export const getBookContent = data => {
   });
 }
 
+// 追书神器
+// 获取所有分类
+export const getAllCategories = data => {
+  return service({
+    url: api.getAllCategories,
+    method: "get",
+    params: data
+  });
+}
+
 

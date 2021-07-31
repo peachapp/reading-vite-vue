@@ -35,17 +35,13 @@ service.interceptors.request.use(response => {
 /****** response 拦截器 ==> 对响应做处理 ******/
 service.interceptors.response.use(
   response => {
+    console.log('ressssss', response)
     // 响应成功处理
 
     // 根据后端提供的数据进行对应的处理
     // code === 0 成功
-    if (response.data.result.code === 0) {
+    if (response.data.ok) {
 
-    } else if (response.data.result.code === 1009) {
-      Dialog.alert({
-        title: "请求错误！",
-        message: "访问受限！",
-      });
     } else {
       Dialog.alert({
         title: "请求错误！",
