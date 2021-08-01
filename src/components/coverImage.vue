@@ -1,5 +1,5 @@
 <template>
-  <van-image :src="target + path"> </van-image>
+  <van-image :src="imgTarget + path"> </van-image>
 </template>
 
 <script setup>
@@ -11,7 +11,7 @@ defineProps({
 
 const store = useStore();
 
-const target = store.state.target;
+const imgTarget = store.state.imgTarget;
 </script>
 
 <style lang="less" scoped>

@@ -8,7 +8,12 @@
 				<van-tab :name="3" title="出版" />
 			</van-tabs>
 		</div>
-		<van-swipe class="swipe" ref="swipeRef" @change="onSwipeChange">
+		<van-swipe
+			class="swipe"
+			:show-indicators="false"
+			ref="swipeRef"
+			@change="onSwipeChange"
+		>
 			<!-- 男生 -->
 			<van-swipe-item>
 				<div class="swipe-item">
@@ -23,8 +28,13 @@
 							</div>
 							<div class="cat-count">{{ item.bookCount }}本</div>
 						</div>
-						<div>
-							<!-- <coverImage :path="item.bookCover[0]" /> -->
+						<div class="cat-images">
+							<coverImage
+								v-for="(imgItem, imgIndex) in item.bookCover"
+								:class="'cat-image-' + imgIndex"
+								:key="imgIndex"
+								:path="imgItem"
+							/>
 						</div>
 					</div>
 				</div>
@@ -43,8 +53,13 @@
 							</div>
 							<div class="cat-count">{{ item.bookCount }}本</div>
 						</div>
-						<div>
-							<!-- <coverImage :path="item.bookCover[0]" /> -->
+						<div class="cat-images">
+							<coverImage
+								v-for="(imgItem, imgIndex) in item.bookCover"
+								:class="'cat-image-' + imgIndex"
+								:key="imgIndex"
+								:path="imgItem"
+							/>
 						</div>
 					</div>
 				</div>
@@ -63,8 +78,13 @@
 							</div>
 							<div class="cat-count">{{ item.bookCount }}本</div>
 						</div>
-						<div>
-							<!-- <coverImage :path="item.bookCover[0]" /> -->
+						<div class="cat-images">
+							<coverImage
+								v-for="(imgItem, imgIndex) in item.bookCover"
+								:class="'cat-image-' + imgIndex"
+								:key="imgIndex"
+								:path="imgItem"
+							/>
 						</div>
 					</div>
 				</div>
@@ -83,8 +103,13 @@
 							</div>
 							<div class="cat-count">{{ item.bookCount }}本</div>
 						</div>
-						<div>
-							<!-- <coverImage :path="item.bookCover[0]" /> -->
+						<div class="cat-images">
+							<coverImage
+								v-for="(imgItem, imgIndex) in item.bookCover"
+								:class="'cat-image-' + imgIndex"
+								:key="imgIndex"
+								:path="imgItem"
+							/>
 						</div>
 					</div>
 				</div>
@@ -148,11 +173,14 @@ onGetAllCategories();
 	height: calc(100% - 44px);
 }
 
+:deep(.van-swipe-item) {
+	overflow-y: auto;
+}
+
 .swipe-item {
 	padding: @s12;
 	display: flex;
 	flex-wrap: wrap;
-	overflow-y: auto;
 	box-sizing: border-box;
 }
 
@@ -160,7 +188,7 @@ onGetAllCategories();
 	margin-bottom: @s12;
 	padding: 0 @s12;
 	width: 48%;
-	height: 60px;
+	height: 70px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -178,5 +206,41 @@ onGetAllCategories();
 
 .cat-count {
 	.small();
+}
+
+.cat-images {
+	flex: 1;
+	height: 70px;
+	position: relative;
+}
+
+.cat-image-0 {
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	width: 30px;
+	height: 40px;
+	margin-left: -40px;
+	z-index: 1;
+}
+
+.cat-image-1 {
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	width: 40px;
+	height: 50px;
+	margin-left: -20px;
+	z-index: 2;
+}
+
+.cat-image-2 {
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	width: 30px;
+	height: 40px;
+	margin-left: 10px;
+	z-index: 1;
 }
 </style>

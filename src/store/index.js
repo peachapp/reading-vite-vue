@@ -4,6 +4,7 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     target: "http://api.zhuishushenqi.com",
+    imgTarget: "http://statics.zhuishushenqi.com",
     categories: [], // 书籍默认的分类列表
     hotSearch: [], // 热搜书籍列表
   },
