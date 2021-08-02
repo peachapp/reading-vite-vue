@@ -36,8 +36,7 @@ html {
 	background-color: @colorPrimary !important;
 
 	.van-nav-bar__title {
-		font-size: @fs18;
-		color: @colorfff !important;
+		.pagetitle();
 	}
 }
 </style>

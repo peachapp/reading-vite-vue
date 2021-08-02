@@ -28,5 +28,9 @@ export default {
   },
   // 追书神器
   // 获取所有分类
-  getAllCategories: "/api/cats/lv2/statistics"
+  getAllCategories: "/api/cats/lv2/statistics",
+  // 获取分类下小类别
+  getMinCategories: "/api/cats/lv2",
+  // 获取排行榜类型
+  getRankCategories: "api/ranking/gender"
 };

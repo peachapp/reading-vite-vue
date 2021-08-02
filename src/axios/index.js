@@ -70,4 +70,14 @@ export const getAllCategories = data => {
   });
 }
 
+// 获取排行榜类型
+export const getRankCategories = data => {
+  return service({
+    url: api.getRankCategories,
+    method: "get",
+    params: data
+  });
+}
+
+
 
