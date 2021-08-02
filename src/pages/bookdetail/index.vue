@@ -7,7 +7,7 @@
 			title="书架"
 			@click-left="onBack"
 		/>
-		<div class="page-content">
+		<div class="page-content overflowauto">
 			<div class="book-detail-container">
 				<coverImage class="book-image" :path="bookDetail.coverImg" />
 				<div class="book-detail">
@@ -166,7 +166,6 @@ onGetDetail();
 .page-content {
 	height: 100%;
 	box-sizing: border-box;
-	overflow-y: auto;
 }
 
 .book-detail-container {
@@ -245,10 +244,7 @@ onGetDetail();
 		font-size: @fs12;
 		font-weight: 600;
 		color: @color000;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		word-break: break-all;
+		.ell1();
 	}
 
 	.recommend-author {

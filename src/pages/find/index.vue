@@ -15,7 +15,7 @@
 			@change="onSwipeChange"
 		>
 			<!-- 男生 -->
-			<van-swipe-item>
+			<van-swipe-item class="overflowauto">
 				<div class="swipe-item">
 					<div
 						class="cat-item"
@@ -40,7 +40,7 @@
 				</div>
 			</van-swipe-item>
 			<!-- 女生 -->
-			<van-swipe-item>
+			<van-swipe-item class="overflowauto">
 				<div class="swipe-item">
 					<div
 						class="cat-item"
@@ -65,7 +65,7 @@
 				</div>
 			</van-swipe-item>
 			<!-- 标签 -->
-			<van-swipe-item>
+			<van-swipe-item class="overflowauto">
 				<div class="swipe-item">
 					<div
 						class="cat-item"
@@ -90,7 +90,7 @@
 				</div>
 			</van-swipe-item>
 			<!-- 出版 -->
-			<van-swipe-item>
+			<van-swipe-item class="overflowauto">
 				<div class="swipe-item">
 					<div
 						class="cat-item"
@@ -171,10 +171,6 @@ onGetAllCategories();
 
 .swipe {
 	height: calc(100% - 44px);
-}
-
-:deep(.van-swipe-item) {
-	overflow-y: auto;
 }
 
 .swipe-item {

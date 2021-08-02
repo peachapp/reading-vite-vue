@@ -20,7 +20,7 @@
 			</template>
 		</van-nav-bar>
 
-		<div class="page-content">
+		<div class="page-content overflowauto">
 			<!-- 搜索历史 -->
 			<div
 				v-if="keyWordsHistory && keyWordsHistory.length > 0"
@@ -241,7 +241,6 @@ const onToBookDetail = (bookId) => {
 	padding: @s12;
 	height: 100%;
 	box-sizing: border-box;
-	overflow-y: auto;
 }
 
 .list-title {
@@ -286,12 +285,7 @@ const onToBookDetail = (bookId) => {
 
 	.res-desc {
 		margin-bottom: @s6;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		flex-direction: column;
+		.ell2();
 		font-size: @fs12;
 		color: @color999;
 	}
@@ -332,12 +326,7 @@ const onToBookDetail = (bookId) => {
 	}
 
 	.hot-desc {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		flex-direction: column;
+		.ell2();
 		font-size: @fs12;
 		color: @color999;
 	}

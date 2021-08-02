@@ -17,7 +17,7 @@
 			<!-- 男生 -->
 			<van-swipe-item>
 				<div class="swipe-item">
-					<div class="cat-container">
+					<div class="cat-container overflowauto">
 						<div
 							v-for="(item, index) in categories.male"
 							:key="index"
@@ -30,7 +30,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="rank-container">
+					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
 							v-for="(item, index) in rankList[0].books"
@@ -54,7 +54,7 @@
 			<!-- 女生 -->
 			<van-swipe-item>
 				<div class="swipe-item">
-					<div class="cat-container">
+					<div class="cat-container overflowauto">
 						<div
 							v-for="(item, index) in categories.female"
 							:key="index"
@@ -67,7 +67,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="rank-container">
+					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
 							v-for="(item, index) in rankList[1].books"
@@ -91,7 +91,7 @@
 			<!-- 标签 -->
 			<van-swipe-item>
 				<div class="swipe-item">
-					<div class="cat-container">
+					<div class="cat-container overflowauto">
 						<div
 							v-for="(item, index) in categories.picture"
 							:key="index"
@@ -104,7 +104,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="rank-container">
+					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
 							v-for="(item, index) in rankList[2].books"
@@ -128,7 +128,7 @@
 			<!-- 出版 -->
 			<van-swipe-item>
 				<div class="swipe-item">
-					<div class="cat-container">
+					<div class="cat-container overflowauto">
 						<div
 							v-for="(item, index) in categories.epub"
 							:key="index"
@@ -141,7 +141,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="rank-container">
+					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
 							v-for="(item, index) in rankList[3].books"
@@ -260,10 +260,6 @@ onGetRankCategories();
 	height: calc(100% - 44px);
 }
 
-:deep(.van-swipe-item) {
-	overflow-y: auto;
-}
-
 .swipe-item {
 	height: 100%;
 	padding-top: @s12;
@@ -277,7 +273,6 @@ onGetRankCategories();
 	border: 1px solid rgb(235, 237, 240);
 	border-left: none;
 	box-sizing: border-box;
-	overflow-y: auto;
 
 	.cat-item {
 		width: 80px;
@@ -314,7 +309,6 @@ onGetRankCategories();
 	padding: 0 @s12;
 	height: 100%;
 	flex: 1;
-	overflow-y: auto;
 
 	.rank-item {
 		margin-top: @s12;
@@ -347,12 +341,7 @@ onGetRankCategories();
 
 	.rank-desc {
 		margin-bottom: @s6;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		flex-direction: column;
+		.ell2();
 		font-size: @fs12;
 		color: @color999;
 	}

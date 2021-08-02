@@ -41,3 +41,19 @@
   color: @color999;
   font-weight: @fw;
 }
+
+.ell1() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.ell2(@num: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: @num;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}

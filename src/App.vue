@@ -39,4 +39,18 @@ html {
 		.pagetitle();
 	}
 }
+
+.overflowauto {
+	/* firefox */
+	scrollbar-width: none;
+	/* IE 10+ */
+	-ms-overflow-style: none;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.overflowauto::-webkit-scrollbar {
+	/* Chrome Safari */
+	display: none;
+}
 </style>

@@ -124,10 +124,7 @@ onMounted(() => {
 		font-size: @fs12;
 		font-weight: 600;
 		color: @color000;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		word-break: break-all;
+		.ell1();
 	}
 }
 
