@@ -32,5 +32,8 @@ export default {
   // 获取分类下小类别
   getMinCategories: "/api/cats/lv2",
   // 获取排行榜类型
-  getRankCategories: "api/ranking/gender"
+  getRankCategories: "api/ranking/gender",
+  // 获取排行榜小说
+  getRankList: "/api/ranking"
+
 };

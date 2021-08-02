@@ -79,5 +79,12 @@ export const getRankCategories = data => {
   });
 }
 
+// 获取排行榜小说
+export const getRankList = data => {
+  return service({
+    url: `${api.getRankList}/${data.rankId}`,
+    method: "get"
+  });
+}
 
 
