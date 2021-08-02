@@ -2,10 +2,12 @@
 	<div class="page-container">
 		<div class="page-header">
 			<van-tabs v-model:active="activeKey" @change="onTabChange">
-				<van-tab :name="0" title="男频" />
-				<van-tab :name="1" title="女频" />
-				<van-tab :name="2" title="标签" />
-				<van-tab :name="3" title="epub" />
+				<van-tab
+					v-for="(item, index) in keyMapping"
+					:key="index"
+					:name="index * 1"
+					:title="item.zh"
+				/>
 			</van-tabs>
 		</div>
 		<van-swipe
@@ -14,147 +16,36 @@
 			ref="swipeRef"
 			@change="onSwipeChange"
 		>
-			<!-- 男生 -->
-			<van-swipe-item>
+			<van-swipe-item v-for="(item, index) in keyMapping" :key="index">
 				<div class="swipe-item">
 					<div class="cat-container overflowauto">
 						<div
-							v-for="(item, index) in categories.male"
-							:key="index"
+							v-for="(catItem, catIndex) in categories[item.en]"
+							:key="catIndex"
 							class="cat-item"
-							:class="{ 'cat-item-active': activeSwipeKey[0] === index }"
-							@click="onSwipeTabChange(0, index)"
+							:class="{ 'cat-item-active': activeSwipeKey[index] === catIndex }"
+							@click="onSwipeTabChange(index, catIndex)"
 						>
 							<div class="cat-title">
-								{{ item.shortTitle }}
+								{{ catItem.shortTitle }}
 							</div>
 						</div>
 					</div>
 					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
-							v-for="(item, index) in rankList[0].books"
-							:key="index"
+							v-for="(rankItem, rankIndex) in rankList[index].books"
+							:key="rankIndex"
+							@click="onToBookDetail(rankItem._id)"
 						>
-							<coverImage class="rank-image" :path="item.cover" />
+							<coverImage class="rank-image" :path="rankItem.cover" />
 							<div class="rank-content">
-								<div class="rank-title">{{ item.title }}</div>
-								<div class="rank-author">{{ item.author }}</div>
-								<div class="rank-desc">{{ item.shortIntro }}</div>
+								<div class="rank-title">{{ rankItem.title }}</div>
+								<div class="rank-author">{{ rankItem.author }}</div>
+								<div class="rank-desc">{{ rankItem.shortIntro }}</div>
 								<div>
 									<van-tag plain>
-										{{ item.minorCate }}
-									</van-tag>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 女生 -->
-			<van-swipe-item>
-				<div class="swipe-item">
-					<div class="cat-container overflowauto">
-						<div
-							v-for="(item, index) in categories.female"
-							:key="index"
-							class="cat-item"
-							:class="{ 'cat-item-active': activeSwipeKey[1] === index }"
-							@click="onSwipeTabChange(1, index)"
-						>
-							<div class="cat-title">
-								{{ item.shortTitle }}
-							</div>
-						</div>
-					</div>
-					<div class="rank-container overflowauto">
-						<div
-							class="rank-item"
-							v-for="(item, index) in rankList[1].books"
-							:key="index"
-						>
-							<coverImage class="rank-image" :path="item.cover" />
-							<div class="rank-content">
-								<div class="rank-title">{{ item.title }}</div>
-								<div class="rank-author">{{ item.author }}</div>
-								<div class="rank-desc">{{ item.shortIntro }}</div>
-								<div>
-									<van-tag plain>
-										{{ item.minorCate }}
-									</van-tag>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 标签 -->
-			<van-swipe-item>
-				<div class="swipe-item">
-					<div class="cat-container overflowauto">
-						<div
-							v-for="(item, index) in categories.picture"
-							:key="index"
-							class="cat-item"
-							:class="{ 'cat-item-active': activeSwipeKey[2] === index }"
-							@click="onSwipeTabChange(2, index)"
-						>
-							<div class="cat-title">
-								{{ item.shortTitle }}
-							</div>
-						</div>
-					</div>
-					<div class="rank-container overflowauto">
-						<div
-							class="rank-item"
-							v-for="(item, index) in rankList[2].books"
-							:key="index"
-						>
-							<coverImage class="rank-image" :path="item.cover" />
-							<div class="rank-content">
-								<div class="rank-title">{{ item.title }}</div>
-								<div class="rank-author">{{ item.author }}</div>
-								<div class="rank-desc">{{ item.shortIntro }}</div>
-								<div>
-									<van-tag plain>
-										{{ item.minorCate }}
-									</van-tag>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 出版 -->
-			<van-swipe-item>
-				<div class="swipe-item">
-					<div class="cat-container overflowauto">
-						<div
-							v-for="(item, index) in categories.epub"
-							:key="index"
-							class="cat-item"
-							:class="{ 'cat-item-active': activeSwipeKey[3] === index }"
-							@click="onSwipeTabChange(3, index)"
-						>
-							<div class="cat-title">
-								{{ item.shortTitle }}
-							</div>
-						</div>
-					</div>
-					<div class="rank-container overflowauto">
-						<div
-							class="rank-item"
-							v-for="(item, index) in rankList[3].books"
-							:key="index"
-						>
-							<coverImage class="rank-image" :path="item.cover" />
-							<div class="rank-content">
-								<div class="rank-title">{{ item.title }}</div>
-								<div class="rank-author">{{ item.author }}</div>
-								<div class="rank-desc">{{ item.shortIntro }}</div>
-								<div>
-									<van-tag plain>
-										{{ item.minorCate }}
+										{{ rankItem.minorCate }}
 									</van-tag>
 								</div>
 							</div>
@@ -168,16 +59,30 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import coverImage from '@/components/coverImage.vue';
 import { getRankCategories, getRankList } from '@/axios';
 
-const keyMapping = {
-	0: 'male',
-	1: 'female',
-	2: 'picture',
-	3: 'epub',
-};
+const router = useRouter();
+
+const keyMapping = ref({
+	0: {
+		en: 'male',
+		zh: '男生',
+	},
+	1: {
+		en: 'female',
+		zh: '女生',
+	},
+	2: {
+		en: 'picture',
+		zh: '标签',
+	},
+	3: {
+		en: 'epub',
+		zh: 'epub',
+	},
+});
 
 // 当前分类
 let activeKey = ref(0);
@@ -190,7 +95,7 @@ let rankList = ref([{}, {}, {}, {}]);
 
 const rankId = computed(() => {
 	const activeCat =
-		categories.value[keyMapping[activeKey.value]][
+		categories.value[keyMapping.value[activeKey.value].en][
 			activeSwipeKey.value[activeKey.value]
 		];
 	return activeCat._id;
@@ -203,7 +108,8 @@ const onGetRankCategories = async () => {
 		if (res.ok) {
 			categories.value = res || {};
 			for (let i = 0; i < 4; i++) {
-				const id = ((categories.value[keyMapping[i]] || [])[0] || {})._id;
+				const id = ((categories.value[keyMapping.value[i].en] || [])[0] || {})
+					._id;
 				await onGetRankList(i, id);
 			}
 		}
@@ -238,6 +144,14 @@ const onSwipeChange = (value) => {
 const onSwipeTabChange = (index, value) => {
 	activeSwipeKey.value[index] = value;
 	onGetRankList(activeKey.value, rankId.value);
+};
+
+// 查看书籍详情
+const onToBookDetail = (bookId) => {
+	router.push({
+		name: 'bookdetail',
+		params: { bookId },
+	});
 };
 
 onGetRankCategories();
@@ -311,15 +225,15 @@ onGetRankCategories();
 	flex: 1;
 
 	.rank-item {
-		margin-top: @s12;
+		margin-bottom: @s12;
 		display: flex;
 		align-items: center;
 	}
 
 	.rank-image {
 		margin-right: @s12;
-		width: 60px;
-		height: 90px;
+		width: 80px;
+		height: 110px;
 		flex-shrink: 0;
 		border-radius: 5px;
 		overflow: hidden;

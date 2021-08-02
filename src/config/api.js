@@ -34,6 +34,8 @@ export default {
   // 获取排行榜类型
   getRankCategories: "api/ranking/gender",
   // 获取排行榜小说
-  getRankList: "/api/ranking"
+  getRankList: "/api/ranking",
+  // 获取小说信息
+  getBookDetail: "/api/book"
 
 };

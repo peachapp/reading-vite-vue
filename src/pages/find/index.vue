@@ -2,10 +2,12 @@
 	<div class="page-container">
 		<div class="page-header">
 			<van-tabs v-model:active="activeKey" @change="onTabChange">
-				<van-tab :name="0" title="男生" />
-				<van-tab :name="1" title="女生" />
-				<van-tab :name="2" title="标签" />
-				<van-tab :name="3" title="出版" />
+				<van-tab
+					v-for="(item, index) in keyMapping"
+					:key="index"
+					:name="index * 1"
+					:title="item.zh"
+				/>
 			</van-tabs>
 		</div>
 		<van-swipe
@@ -14,98 +16,26 @@
 			ref="swipeRef"
 			@change="onSwipeChange"
 		>
-			<!-- 男生 -->
-			<van-swipe-item class="overflowauto">
+			<van-swipe-item
+				class="overflowauto"
+				v-for="(item, index) in keyMapping"
+				:key="index"
+			>
 				<div class="swipe-item">
 					<div
 						class="cat-item"
-						v-for="(item, index) in categories.male"
-						:key="index"
+						v-for="(catItem, catIndex) in categories[item.en]"
+						:key="catIndex"
 					>
 						<div class="cat-left">
 							<div class="cat-name">
-								{{ item.name }}
+								{{ catItem.name }}
 							</div>
-							<div class="cat-count">{{ item.bookCount }}本</div>
+							<div class="cat-count">{{ catItem.bookCount }}本</div>
 						</div>
 						<div class="cat-images">
 							<coverImage
-								v-for="(imgItem, imgIndex) in item.bookCover"
-								:class="'cat-image-' + imgIndex"
-								:key="imgIndex"
-								:path="imgItem"
-							/>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 女生 -->
-			<van-swipe-item class="overflowauto">
-				<div class="swipe-item">
-					<div
-						class="cat-item"
-						v-for="(item, index) in categories.female"
-						:key="index"
-					>
-						<div class="cat-left">
-							<div class="cat-name">
-								{{ item.name }}
-							</div>
-							<div class="cat-count">{{ item.bookCount }}本</div>
-						</div>
-						<div class="cat-images">
-							<coverImage
-								v-for="(imgItem, imgIndex) in item.bookCover"
-								:class="'cat-image-' + imgIndex"
-								:key="imgIndex"
-								:path="imgItem"
-							/>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 标签 -->
-			<van-swipe-item class="overflowauto">
-				<div class="swipe-item">
-					<div
-						class="cat-item"
-						v-for="(item, index) in categories.picture"
-						:key="index"
-					>
-						<div class="cat-left">
-							<div class="cat-name">
-								{{ item.name }}
-							</div>
-							<div class="cat-count">{{ item.bookCount }}本</div>
-						</div>
-						<div class="cat-images">
-							<coverImage
-								v-for="(imgItem, imgIndex) in item.bookCover"
-								:class="'cat-image-' + imgIndex"
-								:key="imgIndex"
-								:path="imgItem"
-							/>
-						</div>
-					</div>
-				</div>
-			</van-swipe-item>
-			<!-- 出版 -->
-			<van-swipe-item class="overflowauto">
-				<div class="swipe-item">
-					<div
-						class="cat-item"
-						v-for="(item, index) in categories.press"
-						:key="index"
-					>
-						<div class="cat-left">
-							<div class="cat-name">
-								{{ item.name }}
-							</div>
-							<div class="cat-count">{{ item.bookCount }}本</div>
-						</div>
-						<div class="cat-images">
-							<coverImage
-								v-for="(imgItem, imgIndex) in item.bookCover"
+								v-for="(imgItem, imgIndex) in catItem.bookCover"
 								:class="'cat-image-' + imgIndex"
 								:key="imgIndex"
 								:path="imgItem"
@@ -124,6 +54,24 @@ import { ref } from 'vue';
 import coverImage from '@/components/coverImage.vue';
 import { getAllCategories } from '@/axios';
 
+const keyMapping = ref({
+	0: {
+		en: 'male',
+		zh: '男生',
+	},
+	1: {
+		en: 'female',
+		zh: '女生',
+	},
+	2: {
+		en: 'picture',
+		zh: '标签',
+	},
+	3: {
+		en: 'press',
+		zh: '出版',
+	},
+});
 // 当前分类
 let activeKey = ref(0);
 // 分类列表

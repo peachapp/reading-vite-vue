@@ -87,4 +87,12 @@ export const getRankList = data => {
   });
 }
 
+// 获取小说信息
+export const getBookDetail = data => {
+  return service({
+    url: `${api.getBookDetail}/${data.booId}`,
+    method: "get"
+  });
+}
+
 
