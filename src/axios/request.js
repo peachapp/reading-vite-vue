@@ -40,14 +40,14 @@ service.interceptors.response.use(
 
     // 根据后端提供的数据进行对应的处理
     // code === 0 成功
-    if (response.data.ok) {
+    // if (response.data.ok) {
 
-    } else {
-      Dialog.alert({
-        title: "请求错误！",
-        message: response.data.result.msg || "获取数据时发生了未知错误！",
-      });
-    };
+    // } else {
+    //   Dialog.alert({
+    //     title: "请求错误！",
+    //     message: response.data.result.msg || "获取数据时发生了未知错误！",
+    //   });
+    // };
 
     return response.data;
   },

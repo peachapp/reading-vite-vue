@@ -46,16 +46,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import coverImage from '@/components/coverImage.vue';
 
+const store = useStore();
 const router = useRouter();
 
 // 书架
-const historyBookshelfList = ref(
-	JSON.parse(localStorage.getItem('bookshelfList')) || [],
-);
+const historyBookshelfList = computed(() => store.state.bookshelfList);
 
 // 跳转到搜索页
 const onToSearch = () => {
@@ -78,10 +78,6 @@ const onToReading = (bookId) => {
 		params: { bookId },
 	});
 };
-
-onMounted(() => {
-	console.log('onMounted');
-});
 </script>
 
 <style lang="less" scoped>

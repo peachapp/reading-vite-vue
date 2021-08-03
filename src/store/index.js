@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import yuxStorage from 'yux-storage';
 // import { getAppConfig } from "@/axios";
 
 export default createStore({
@@ -7,6 +8,7 @@ export default createStore({
     imgTarget: "http://statics.zhuishushenqi.com",
     categories: [], // 书籍默认的分类列表
     hotSearch: [], // 热搜书籍列表
+    bookshelfList: [], // 书架
   },
   mutations: {
     update_categories(state, data) {
@@ -15,8 +17,27 @@ export default createStore({
     update_hotSearch(state, data) {
       state.hotSearch = data || [];
     },
+    update_bookshelfList(state, data) {
+      state.bookshelfList = data || [];
+    }
   },
   actions: {
+    async onGetBookshelfList({ commit }) {
+      try {
+        const res = await yuxStorage.getItem('bookshelfList');
+        commit("update_bookshelfList", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async onSetBookshelfList({ commit }, data) {
+      try {
+        await yuxStorage.setItem('bookshelfList', data);
+        commit("update_bookshelfList", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // async onGetAppConfig({ commit }) {
     //   try {
     //     const res = await getAppConfig();

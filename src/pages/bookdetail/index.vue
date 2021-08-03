@@ -4,74 +4,106 @@
 			class="page-title"
 			fixed
 			left-arrow
-			title="书架"
+			:title="bookDetail.title"
 			@click-left="onBack"
 		/>
 		<div class="page-content overflowauto">
+			<!-- 基本信息 -->
 			<div class="book-detail-container">
-				<coverImage class="book-image" :path="bookDetail.coverImg" />
+				<coverImage class="book-image" :path="bookDetail.cover" />
 				<div class="book-detail">
 					<div class="book-title">{{ bookDetail.title }}</div>
 					<div class="book-author">{{ bookDetail.author }}</div>
 					<div class="book-tag">
 						<span>
-							{{ bookDetail.categoryName }}
+							{{ bookDetail.cat }}
 						</span>
-						<span>
-							{{ bookDetail.word }}
-						</span>
+						<span> {{ bookDetail.wordCount }}字 </span>
+					</div>
+					<div>
+						<van-tag
+							style="margin-right: 12px"
+							color="#12ab76"
+							plain
+							v-for="(tagItem, tagIndex) in bookDetail.tags"
+							:key="tagIndex"
+						>
+							{{ tagItem }}
+						</van-tag>
 					</div>
 				</div>
 			</div>
-			<div class="book-desc">{{ bookDetail.desc }}</div>
+			<!-- 排行信息 -->
+			<div class="book-honor">
+				<div class="book-rating">
+					<div class="custom-title">
+						<span style="margin-right: 3px">
+							{{ (bookDetail.rating || {}).score }}
+						</span>
+						<van-rate
+							size="14"
+							gutter="0"
+							color="#12ab76"
+							allow-half
+							v-model="bookScore"
+							readonly
+						/>
+					</div>
+					<div class="custom-label">
+						{{ (bookDetail.rating || {}).tip }}
+					</div>
+				</div>
+				<div class="book-retention">
+					<div class="custom-title">{{ bookDetail.retentionRatio }}%</div>
+					<div class="custom-label">读者留存</div>
+				</div>
+				<div class="book-follower">
+					<div class="custom-title">{{ bookDetail.totalFollower }}</div>
+					<div class="custom-label">累计人气</div>
+				</div>
+			</div>
+			<!-- 简介 -->
+			<div>
+				<van-cell-group class="cell-group-container">
+					<van-cell icon="description">
+						<template #title>
+							<span class="custom-title">简介</span>
+						</template>
+					</van-cell>
+				</van-cell-group>
+				<div class="book-desc">{{ bookDetail.longIntro }}</div>
+			</div>
+			<!-- 最新/目录 -->
 			<van-cell-group class="cell-group-container">
-				<van-cell is-link icon="clock-o">
+				<van-cell icon="clock-o">
 					<template #title>
 						<span class="custom-title">最新</span>
 						<span class="custom-label">
-							{{ (bookDetail.update || {}).chapterName }}
-						</span>
-					</template>
-					<template #value>
-						<span class="custom-value">
-							{{
-								(bookDetail.update || {}).chapterStatus === 'END'
-									? '已完结'
-									: '连载'
-							}}
+							{{ bookDetail.updated }}
 						</span>
 					</template>
 				</van-cell>
 				<van-cell is-link icon="notes-o">
 					<template #title>
 						<span class="custom-title">目录</span>
-						<span class="custom-label">共{{ bookDetail.chapterNum }}章</span>
+						<span class="custom-label">{{ bookDetail.lastChapter }}</span>
 					</template>
 				</van-cell>
 			</van-cell-group>
-			<!-- 热门推荐 -->
-			<van-cell-group class="cell-group-container">
-				<van-cell is-link>
-					<template #title>
-						<span class="custom-title">热门推荐</span>
-					</template>
-					<template #value>
-						<span class="custom-label">查看更多</span>
-					</template>
-				</van-cell>
-			</van-cell-group>
-			<div class="recommend-container">
-				<div
-					class="recommend-item"
-					v-for="(item, index) in bookDetail.recommend"
-					:key="index"
-				>
-					<coverImage class="recommend-image" :path="item.coverImg" />
-					<div class="recommend-title">{{ item.title }}</div>
-					<div class="recommend-author">{{ item.author }}</div>
+
+			<!-- 版权信息 -->
+			<div>
+				<van-cell-group class="cell-group-container">
+					<van-cell>
+						<template #title>
+							<span class="custom-title">图书信息</span>
+						</template>
+					</van-cell>
+				</van-cell-group>
+				<div class="book-copyright">
+					版权信息：{{ bookDetail.copyrightInfo }}
 				</div>
 			</div>
-			<van-button class="refresh-btn" block> 换一批 </van-button>
 		</div>
 
 		<van-tabbar class="tabbar-container">
@@ -93,25 +125,29 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
-import { debounce } from 'lodash';
+import { cloneDeep } from 'lodash';
 import coverImage from '@/components/coverImage.vue';
-import { getDetail } from '@/axios';
+import { getBookDetail } from '@/axios';
 
+const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
 // 书籍号
 const bookId = ref(route.params.bookId);
 const bookDetail = ref({});
+// 评分
+const bookScore = computed(() => {
+	return ((bookDetail.value.rating || {}).score * 5) / 10;
+});
 
 // 书架
-const historyBookshelfList = ref(
-	JSON.parse(localStorage.getItem('bookshelfList')) || [],
-);
+const historyBookshelfList = computed(() => store.state.bookshelfList);
 const shelfIndex = computed(() => {
 	return historyBookshelfList.value.findIndex(
-		(item) => item.bookId === bookDetail.value.bookId,
+		(item) => item._id === bookDetail.value._id,
 	);
 });
 
@@ -121,18 +157,16 @@ const onBack = () => {
 };
 
 // 书籍详情
-const onGetDetail = debounce(async () => {
+const onGetBookDetail = async () => {
 	try {
-		const res = await getDetail({
+		const res = await getBookDetail({
 			bookId: bookId.value,
 		});
-		if (res.result.code === 0) {
-			bookDetail.value = res.data || {};
-		}
+		bookDetail.value = res || {};
 	} catch (error) {
 		console.log(error);
 	}
-}, 10000);
+};
 
 // 更新书架
 const onUpdateBookshelf = () => {
@@ -143,12 +177,13 @@ const onUpdateBookshelf = () => {
 	}
 };
 
-// 监听书架，更新localStorage
+// 监听书架，更新缓存IndexedDB
 watch(historyBookshelfList.value, (newValue) => {
-	localStorage.setItem('bookshelfList', JSON.stringify(newValue));
+	const cloneValue = cloneDeep(newValue);
+	store.dispatch('onSetBookshelfList', cloneValue);
 });
 
-onGetDetail();
+onGetBookDetail();
 </script>
 
 <style lang="less" scoped>
@@ -191,7 +226,6 @@ onGetDetail();
 		margin-bottom: @s6;
 		font-size: @fs12;
 		color: @color999;
-		font-weight: 600;
 	}
 
 	.book-tag span {
@@ -199,7 +233,34 @@ onGetDetail();
 	}
 }
 
-.book-desc {
+.book-honor {
+	margin-top: @s12;
+	padding: @s12 0;
+	display: flex;
+	text-align: center;
+	background: @colorfff;
+}
+
+.book-rating,
+.book-retention,
+.book-follower {
+	width: 33.3333%;
+	flex: 1;
+
+	.custom-title {
+		font-size: @fs14;
+		color: @color000;
+	}
+
+	.custom-label {
+		margin-top: @s6;
+		font-size: @fs12;
+		color: @color999;
+	}
+}
+
+.book-desc,
+.book-copyright {
 	padding: @s12;
 	background: @colorfff;
 	font-size: @fs12;
@@ -216,48 +277,6 @@ onGetDetail();
 		font-size: @fs12;
 		color: @color999;
 	}
-
-	.custom-value {
-		color: @colorPrimary;
-	}
-}
-
-.recommend-container {
-	padding: @s12 @s12 0;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	background: @colorfff;
-
-	.recommend-item {
-		margin-bottom: @s12;
-		width: 100px;
-	}
-
-	.recommend-image {
-		margin-bottom: @s6;
-		height: 120px;
-	}
-
-	.recommend-title {
-		margin-bottom: @s6;
-		font-size: @fs12;
-		font-weight: 600;
-		color: @color000;
-		.ell1();
-	}
-
-	.recommend-author {
-		font-size: @fs12;
-		font-weight: 600;
-		color: @color999;
-	}
-}
-
-.refresh-btn {
-	margin-bottom: @s12;
-	font-size: @fs12;
-	color: @colorPrimary;
 }
 
 .tabbar-text-active {
