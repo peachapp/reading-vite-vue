@@ -1,13 +1,11 @@
 import { createStore } from "vuex";
 import yuxStorage from 'yux-storage';
-// import { getAppConfig } from "@/axios";
+// import { quest } from "@/axios";
 
 export default createStore({
   state: {
     target: "http://api.zhuishushenqi.com",
     imgTarget: "http://statics.zhuishushenqi.com",
-    categories: [], // 书籍默认的分类列表
-    hotSearch: [], // 热搜书籍列表
     bookshelfList: [], // 书架
   },
   mutations: {
@@ -38,9 +36,9 @@ export default createStore({
         console.log(error);
       }
     },
-    // async onGetAppConfig({ commit }) {
+    // async quest({ commit }) {
     //   try {
-    //     const res = await getAppConfig();
+    //     const res = await quest();
     //     if (res.result.code === 0) {
     //       commit("update_categories", res.data.categories);
     //       commit("update_hotSearch", res.data.hotSearch);

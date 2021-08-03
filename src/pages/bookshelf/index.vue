@@ -18,9 +18,10 @@
 						class="bookshelf-item"
 						v-for="(item, index) in historyBookshelfList"
 						:key="index"
-						@click="onToReading(item.bookId)"
+						@click="onToReading(item._id)"
+						@dblclick="onActionsheetShow(item._id)"
 					>
-						<coverImage class="bookshelf-image" :path="item.coverImg" />
+						<coverImage class="bookshelf-image" :path="item.cover" />
 						<div class="bookshelf-title">
 							{{ item.title }}
 						</div>
@@ -42,13 +43,23 @@
 				</div>
 			</div>
 		</div>
+		<!-- 动作面板 -->
+		<van-action-sheet
+			v-model:show="actionVisible"
+			:actions="actions"
+			cancel-text="取消"
+			close-on-click-action
+			@select="onActionsheetSelect"
+			@cancel="onActionsheetHide"
+		/>
 	</div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { cloneDeep } from 'lodash';
 import coverImage from '@/components/coverImage.vue';
 
 const store = useStore();
@@ -56,6 +67,20 @@ const router = useRouter();
 
 // 书架
 const historyBookshelfList = computed(() => store.state.bookshelfList);
+let currentBookId = ref(null);
+const shelfIndex = computed(() => {
+	return historyBookshelfList.value.findIndex(
+		(item) => item._id === currentBookId.value,
+	);
+});
+// 动作面板
+let actionVisible = ref(false);
+const actions = [
+	{ id: 1, name: '书籍详情' },
+	{ id: 2, name: '删除' },
+];
+
+let clickTimer = null;
 
 // 跳转到搜索页
 const onToSearch = () => {
@@ -73,10 +98,56 @@ const onTobookcity = () => {
 
 // 跳转到reading
 const onToReading = (bookId) => {
+	if (clickTimer) {
+		window.clearTimeout(clickTimer);
+		clickTimer = null;
+	}
+	clickTimer = window.setTimeout(() => {
+		router.push({
+			name: 'reading',
+			params: { bookId },
+		});
+	}, 300);
+};
+
+// 查看书籍详情
+const onToBookDetail = (bookId) => {
 	router.push({
-		name: 'reading',
+		name: 'bookdetail',
 		params: { bookId },
 	});
+};
+
+// 选择actionsheet
+const onActionsheetSelect = (action) => {
+	if (action.id === 1) {
+		onToBookDetail(currentBookId.value);
+	}
+	if (action.id === 2) {
+		historyBookshelfList.value.splice(shelfIndex.value, 1);
+	}
+};
+
+// 监听书架，更新缓存IndexedDB
+watch(historyBookshelfList.value, (newValue) => {
+	const cloneValue = cloneDeep(newValue);
+	store.dispatch('onSetBookshelfList', cloneValue);
+});
+
+// 展示actionsheet
+const onActionsheetShow = (bookId) => {
+	if (clickTimer) {
+		window.clearTimeout(clickTimer);
+		clickTimer = null;
+	}
+	currentBookId.value = bookId;
+	actionVisible.value = true;
+};
+
+// 隐藏actionsheet
+const onActionsheetHide = () => {
+	currentBookId.value = null;
+	actionVisible.value = false;
 };
 </script>
 
