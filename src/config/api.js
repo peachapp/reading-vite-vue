@@ -1,9 +1,4 @@
 export default {
-  // 书架
-  bookshelf: {
-    // 搜索书籍
-    search: "/api/app/open/api/book/search"
-  },
   // 书城
   bookcity: {
     // 书籍目录
@@ -21,6 +16,9 @@ export default {
   // 获取排行榜小说
   getRankList: "/api/ranking",
   // 获取小说信息
-  getBookDetail: "/api/book"
-
+  getBookDetail: "/api/book",
+  // 获取搜索热词
+  getSearchHotWords: "/api/book/search-hotwords",
+  // 模糊搜索
+  fuzzySearch: "/api/book/fuzzy-search"
 };

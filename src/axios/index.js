@@ -1,16 +1,6 @@
 import service from "@/axios/request";
 import api from "@/config/api";
 
-// 书架
-// 搜索书籍
-export const search = data => {
-  return service({
-    url: api.bookshelf.search,
-    method: "get",
-    params: data
-  });
-};
-
 // 书籍目录
 export const getChapterByBookId = data => {
   return service({
@@ -61,6 +51,24 @@ export const getBookDetail = data => {
   return service({
     url: `${api.getBookDetail}/${data.bookId}`,
     method: "get"
+  });
+}
+
+// 获取搜索热词
+export const getSearchHotWords = data => {
+  return service({
+    url: api.getSearchHotWords,
+    method: "get",
+    params: data
+  });
+}
+
+// 模糊搜索
+export const fuzzySearch = data => {
+  return service({
+    url: api.fuzzySearch,
+    method: "get",
+    params: data
   });
 }
 

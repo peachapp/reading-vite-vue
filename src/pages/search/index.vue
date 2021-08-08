@@ -7,20 +7,41 @@
 			left-arrow
 			right-text="搜索"
 			@click-left="onBack"
-			@click-right="onSearch"
+			@click-right="onFuzzySearch"
 		>
 			<template #title>
 				<van-search
 					class="page-search"
 					shape="round"
-					v-model="searchState.keyWord"
+					v-model="keyWord"
 					placeholder="请输入搜索关键词"
-					@search="onSearch"
+					@search="onFuzzySearch"
 				/>
 			</template>
 		</van-nav-bar>
 
 		<div class="page-content overflowauto">
+			<!-- 搜索热词 -->
+			<div
+				v-if="searchHotWords && searchHotWords.length > 0"
+				class="hotwords-container"
+			>
+				<div class="list-title">
+					<span> 搜索热词 </span>
+					<span> 查看更多 </span>
+				</div>
+				<van-tag
+					class="hotwords-item"
+					v-for="(item, index) in 10"
+					round
+					color="#e7e8ea"
+					text-color="#333"
+					:key="index"
+					@click="onSearchByInk(searchHotWords[index].word)"
+				>
+					{{ searchHotWords[index].word }}
+				</van-tag>
+			</div>
 			<!-- 搜索历史 -->
 			<div
 				v-if="keyWordsHistory && keyWordsHistory.length > 0"
@@ -37,68 +58,39 @@
 					color="#e7e8ea"
 					text-color="#333"
 					:key="index"
-					@click="onSearchByHistory(item)"
+					@click="onSearchByInk(item)"
 				>
 					{{ item }}
 				</van-tag>
 			</div>
 
 			<!-- 搜索结果 -->
-			<div v-if="searchFlag" class="list-container">
+			<div class="list-container">
 				<div class="list-title">搜索结果</div>
-				<van-loading v-if="searchState.searchLoading" size="24px" vertical>
+				<van-loading v-if="loading" size="24px" vertical>
 					加载中...
 				</van-loading>
-				<van-list
-					v-else-if="searchResList && searchResList.length > 0"
-					v-model:loading="searchState.loading"
-					:finished="searchState.finished"
-					finished-text="没有更多了"
-					@load="onLoadList"
-				>
+				<div v-else-if="searchResList && searchResList.length > 0">
 					<div
 						v-for="(item, index) in searchResList"
 						:key="index"
 						class="res-item"
-						@click="onToBookDetail(item.bookId)"
+						@click="onToBookDetail(item._id)"
 					>
-						<coverImage class="res-image" :path="item.coverImg" />
+						<coverImage class="res-image" :path="item.cover" />
 						<div class="res-content">
 							<div class="res-title">{{ item.title }}</div>
 							<div class="res-author">{{ item.author }}</div>
-							<div class="res-desc">{{ item.desc }}</div>
+							<div class="res-desc">{{ item.shortIntro }}</div>
 							<div>
 								<van-tag plain style="margin-right: 6px">
 									{{ item.chapterStatus === 'END' ? '已完结' : '连载' }}
 								</van-tag>
-								<van-tag plain>{{ item.categoryName }}</van-tag>
+								<van-tag plain>{{ item.cat }}</van-tag>
 							</div>
 						</div>
 					</div>
-				</van-list>
-				<van-empty v-else description="暂无数据" />
-			</div>
-
-			<!-- 热搜书籍 -->
-			<div v-if="!searchFlag" class="list-container">
-				<div class="list-title">热搜书籍</div>
-				<template v-if="hotSearchList && hotSearchList.length > 0">
-					<div
-						v-for="(item, index) in hotSearchList"
-						:key="index"
-						class="hot-item"
-						@click="onToBookDetail(item.bookId)"
-					>
-						<div class="hot-number" :class="{ 'hot-number-active': index < 3 }">
-							{{ index + 1 }}
-						</div>
-						<coverImage class="hot-image" :path="item.coverImg" />
-						<div class="hot-content">
-							<div class="hot-title">{{ item.title }}</div>
-							<div class="hot-desc">{{ item.desc }}</div>
-						</div>
-					</div>
-				</template>
+				</div>
 				<van-empty v-else description="暂无数据" />
 			</div>
 		</div>
@@ -106,94 +98,65 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { debounce } from 'lodash';
+import { cloneDeep } from 'lodash';
 import coverImage from '@/components/coverImage.vue';
-import { search } from '@/axios';
+import { getSearchHotWords, fuzzySearch } from '@/axios';
 
 const store = useStore();
 const router = useRouter();
 
-// 当前页面是搜索结果还是热搜列表 true：搜索结果，false：热搜列表
-let searchFlag = ref(false);
-
-const searchState = reactive({
-	pageSize: 30, // 请求每页多少条的数据
-	keyWord: '', // 书籍关键词
-	pageNum: 1, // 请求第几页的数据,
-	searchLoading: false, // search是否处于加载状态
-	loading: false, // list是否处于加载状态
-	finished: false, // list是否已加载完成
-});
-
-// 搜索结果
-let searchResList = ref([]);
-
-// 搜索历史
-let keyWordsHistory = ref(JSON.parse(localStorage.getItem('keyWords')) || []);
-
-// 热搜书籍列表
-const hotSearchList = computed(() => store.state.hotSearch);
+const searchHotWords = ref([]); // 搜索热词
+const keyWord = ref(''); // 搜索关键词
+const loading = ref(false); // search是否处于加载状态
+const searchResList = ref([]); // 搜索结果
+const keyWordsHistory = computed(() => store.state.keyWords); // 搜索历史
 
 // 返回
 const onBack = () => {
 	router.go(-1);
 };
 
-// 搜索结果
-const onGetSearchResList = debounce(async () => {
+// 获取搜索热词
+const onGetSearchHotWords = async () => {
 	try {
-		const res = await search({
-			pageSize: searchState.pageSize,
-			pageNum: searchState.pageNum,
-			keyWord: searchState.keyWord,
-		});
-		searchState.searchLoading = false;
-		searchState.loading = false;
-		// 如果有搜索关键字，更新搜索历史
-		if (searchState.keyWord) {
-			if (!keyWordsHistory.value.includes(searchState.keyWord)) {
-				keyWordsHistory.value.push(searchState.keyWord);
-			}
-		}
-		if (res.result.code === 0) {
-			// 第一页，需要先将旧值清除掉
-			if (searchState.pageNum === 1) {
-				searchResList.value = [];
-			}
-			searchResList.value = [...searchResList.value, ...res.data.list];
-			if ((res.data.list || []).length === searchState.pageSize) {
-				searchState.pageNum = searchState.pageNum + 1;
-			} else {
-				searchState.finished = true;
-			}
+		const res = await getSearchHotWords();
+		if (res.ok) {
+			searchHotWords.value = res.searchHotWords || [];
 		}
 	} catch (error) {
 		console.log(error);
 	}
-}, 10000);
-
-// 搜索
-const onSearch = () => {
-	searchFlag.value = true;
-	searchState.pageNum = 1;
-	searchState.finished = false;
-	searchState.searchLoading = true;
-	onGetSearchResList();
 };
 
-// 通过历史搜索关键字搜索
-const onSearchByHistory = (value) => {
-	searchState.keyWord = value;
-	onSearch();
+// 搜索结果
+const onFuzzySearch = async () => {
+	try {
+		loading.value = true;
+		const res = await fuzzySearch({
+			query: keyWord.value,
+		});
+		loading.value = false;
+		// 如果有搜索关键字，更新搜索历史
+		if (keyWord.value) {
+			if (!keyWordsHistory.value.includes(keyWord.value)) {
+				keyWordsHistory.value.push(keyWord.value);
+			}
+		}
+		if (res.ok) {
+			searchResList.value = res.books || [];
+		}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
-// 加载更多
-const onLoadList = () => {
-	searchState.loading = true;
-	onGetSearchResList();
+// 快捷搜索（通过搜索热词关键字搜索，通过历史搜索关键字搜索）
+const onSearchByInk = (value) => {
+	keyWord.value = value;
+	onFuzzySearch();
 };
 
 // 清空搜索历史
@@ -203,7 +166,8 @@ const onClearKeyWordsHistory = () => {
 
 // 监听搜索历史，更新localStorage
 watch(keyWordsHistory.value, (newValue) => {
-	localStorage.setItem('keyWords', JSON.stringify(newValue));
+	const cloneValue = cloneDeep(newValue);
+	store.dispatch('onSetKeyWords', cloneValue);
 });
 
 // 查看书籍详情
@@ -213,6 +177,8 @@ const onToBookDetail = (bookId) => {
 		params: { bookId },
 	});
 };
+
+onGetSearchHotWords();
 </script>
 
 <style lang="less" scoped>
@@ -251,8 +217,14 @@ const onToBookDetail = (bookId) => {
 	color: @color999;
 }
 
+.hotwords-container,
+.keywords-container {
+	margin-bottom: @s12;
+}
+
+.hotwords-item,
 .keywords-item {
-	margin: @s12 @s6 @s12 0;
+	margin: @s12 @s6 0 0;
 }
 
 .res-item {
@@ -285,47 +257,6 @@ const onToBookDetail = (bookId) => {
 
 	.res-desc {
 		margin-bottom: @s6;
-		.ell2();
-		font-size: @fs12;
-		color: @color999;
-	}
-}
-
-.hot-item {
-	margin-top: @s12;
-	display: flex;
-	align-items: center;
-
-	.hot-number {
-		width: @s24;
-		text-align: center;
-		font-size: @fs14;
-		font-weight: 600;
-		color: @color999;
-		flex-shrink: 0;
-	}
-
-	.hot-number-active {
-		color: #b22828;
-	}
-
-	.hot-image {
-		margin: 0 @s12;
-		width: 60px;
-		height: 88px;
-		flex-shrink: 0;
-		border-radius: 5px;
-		overflow: hidden;
-	}
-
-	.hot-title {
-		margin-bottom: @s6;
-		font-size: @fs14;
-		font-weight: 600;
-		color: @color000;
-	}
-
-	.hot-desc {
 		.ell2();
 		font-size: @fs12;
 		color: @color999;
