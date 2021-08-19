@@ -111,7 +111,13 @@
 				<view class="tabbar-text-active">下载</view>
 			</van-tabbar-item>
 			<van-tabbar-item>
-				<van-button class="read-btn" block color="#12AB76" round>
+				<van-button
+					class="read-btn"
+					block
+					color="#12AB76"
+					round
+					@click="onToReading"
+				>
 					开始阅读
 				</van-button>
 			</van-tabbar-item>
@@ -182,6 +188,14 @@ watch(historyBookshelfList.value, (newValue) => {
 	const cloneValue = cloneDeep(newValue);
 	store.dispatch('onSetBookshelfList', cloneValue);
 });
+
+// 跳转到reading
+const onToReading = () => {
+	router.push({
+		name: 'reading',
+		params: { bookId: bookId.value },
+	});
+};
 
 onGetBookDetail();
 </script>

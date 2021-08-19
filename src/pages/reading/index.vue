@@ -1,6 +1,9 @@
 <template>
 	<div class="page-container">
-		<eBook />
+		<!-- <div class="chapter-title">第一章</div> -->
+		<div class="chapter-content">
+			<eBook :content="content" config="ddd" />
+		</div>
 	</div>
 </template>
 
@@ -9,6 +12,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import eBook from '@/components/eBook.vue';
 import { getBookChapters2, getChapterContent } from '@/axios';
+import { content } from './content';
 
 const route = useRoute();
 
@@ -18,7 +22,6 @@ const chapterList = ref([]);
 
 // 获取小说章节内容
 const onGetChapterContent = async () => {
-	const ids = chapterList.value.map((item) => item.id);
 	try {
 		const res = await getChapterContent({
 			link: chapterList.value[0].link,
@@ -40,7 +43,7 @@ const onGetBookChapters = async () => {
 			bookId: bookId.value,
 		});
 		chapterList.value = res.chapters || [];
-		// onGetChapterContent();
+		onGetChapterContent();
 	} catch (error) {
 		console.log(error);
 	}

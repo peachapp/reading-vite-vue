@@ -69,10 +69,13 @@ export const getAtoc = () => {
 };
 
 // 9.获取小说章节(根据小说id) 0
-export const getBookChapters1 = () => {
+export const getBookChapters1 = data => {
   return service({
-    url: `/api//mix-atoc/:bookId`,
-    method: "get"
+    url: `/api/mix-atoc/${data.bookId}`,
+    method: "get",
+    params: {
+      view: 'chapters'
+    }
   });
 };
 
