@@ -7,9 +7,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { debounce } from 'lodash';
 import eBook from '@/components/eBook.vue';
-import { getChapterByBookId, getBookContent } from '@/axios';
+import { getBookChapters2, getChapterContent } from '@/axios';
 
 const route = useRoute();
 
@@ -17,15 +16,14 @@ const route = useRoute();
 const bookId = ref(route.params.bookId);
 const chapterList = ref([]);
 
-// 书籍目录
-const onGetBookContent = debounce(async () => {
+// 获取小说章节内容
+const onGetChapterContent = async () => {
 	const ids = chapterList.value.map((item) => item.id);
 	try {
-		const res = await getBookContent({
-			bookId: Number(bookId.value),
-			chapterIdList: ids,
-			v: chapterList.value[0] && chapterList.value[0].v,
+		const res = await getChapterContent({
+			link: chapterList.value[0].link,
 		});
+		console.log('resssss', res);
 		if (res.result.code === 0) {
 			console.log('content', res);
 			// chapterList.value = res.data.chapters || [];
@@ -33,26 +31,22 @@ const onGetBookContent = debounce(async () => {
 	} catch (error) {
 		console.log(error);
 	}
-}, 10000);
+};
 
-// 书籍目录
-const onGetChapterByBookId = debounce(async () => {
+// 获取小说章节
+const onGetBookChapters = async () => {
 	try {
-		const res = await getChapterByBookId({
+		const res = await getBookChapters2({
 			bookId: bookId.value,
 		});
-		console.log('hhhhh', res);
-		if (res.result.code === 0) {
-			chapterList.value = res.data.chapters || [];
-			// onGetBookContent();
-		}
+		chapterList.value = res.chapters || [];
+		// onGetChapterContent();
 	} catch (error) {
 		console.log(error);
 	}
-}, 10000);
+};
 
-onGetChapterByBookId();
-// init();
+onGetBookChapters();
 </script>
 
 <style lang="less" scoped>

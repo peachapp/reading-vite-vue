@@ -1,75 +1,132 @@
 import service from "@/axios/request";
-import api from "@/config/api";
 
-// 书籍目录
-export const getChapterByBookId = data => {
-  return service({
-    url: api.bookcity.getChapterByBookId,
-    method: "get",
-    params: data
-  });
-}
-
-// 书籍章节下载
-export const getBookContent = data => {
-  return service({
-    url: api.bookcity.getBookContent,
-    method: "post",
-    data
-  });
-}
-
-// 追书神器
-// 获取所有分类
+// 1.获取所有分类
 export const getAllCategories = data => {
   return service({
-    url: api.getAllCategories,
+    url: `/api/cats/lv2/statistics`,
     method: "get",
     params: data
   });
-}
+};
 
-// 获取排行榜类型
+// 2.获取排行榜类型
 export const getRankCategories = data => {
   return service({
-    url: api.getRankCategories,
+    url: `/api/ranking/gender`,
     method: "get",
     params: data
   });
-}
+};
 
-// 获取排行榜小说
+// 3.获取排行榜小说
 export const getRankList = data => {
   return service({
-    url: `${api.getRankList}/${data.rankId}`,
+    url: `/api/ranking/${data.rankId}`,
     method: "get"
   });
-}
+};
 
-// 获取小说信息
+// 4.获取分类下小类别 0
+export const getV2Categories = data => {
+  return service({
+    url: `/api/cats/lv2`,
+    method: "get",
+    params: data
+  });
+};
+
+// 5.根据分类获取小说列表 0
+export const getBookListByCategories = data => {
+  return service({
+    url: `/api/book/by-categories`,
+    method: "get",
+    params: data
+  });
+};
+
+// 6.获取小说信息
 export const getBookDetail = data => {
   return service({
-    url: `${api.getBookDetail}/${data.bookId}`,
+    url: `/api/book/${data.bookId}`,
     method: "get"
   });
-}
+};
 
-// 获取搜索热词
+// 7.获取小说正版源 0
+export const getBtoc = () => {
+  return service({
+    url: `/api/btoc`,
+    method: "get"
+  });
+};
+
+// 8.获取小说正版源于盗版源(混合) 0
+export const getAtoc = () => {
+  return service({
+    url: `/api/atoc`,
+    method: "get"
+  });
+};
+
+// 9.获取小说章节(根据小说id) 0
+export const getBookChapters1 = () => {
+  return service({
+    url: `/api//mix-atoc/:bookId`,
+    method: "get"
+  });
+};
+
+// 10.获取小说章节(根据小说源id)
+export const getBookChapters2 = data => {
+  return service({
+    url: `/api/atoc/${data.bookId}`,
+    method: 'get',
+    params: {
+      view: 'chapters'
+    }
+  });
+};
+
+// 11.获取小说章节内容 0.5
+export const getChapterContent = data => {
+  return service({
+    url: `/api/chapter/${data.link}`,
+    method: 'get'
+  });
+};
+
+// 12.获取搜索热词
 export const getSearchHotWords = data => {
   return service({
-    url: api.getSearchHotWords,
+    url: `/api/book/search-hotwords`,
     method: "get",
     params: data
   });
-}
+};
 
-// 模糊搜索
+// 13.搜索自动补充 0
+export const getAutoComplete = data => {
+  return service({
+    url: `/api/book/auto-complete`,
+    method: "get",
+    params: data
+  });
+};
+
+// 14.模糊搜索
 export const fuzzySearch = data => {
   return service({
-    url: api.fuzzySearch,
+    url: `/api/book/fuzzy-search`,
     method: "get",
     params: data
   });
-}
+};
 
-
+// 15.获取小说最新章节 0
+export const getUpdatedChapters = data => {
+  return service({
+    url: `/api/book`,
+    method: "get",
+    params: data
+  })
+};
