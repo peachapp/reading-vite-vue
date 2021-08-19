@@ -145,11 +145,12 @@ onGetAllCategories();
 }
 
 .cat-name {
-	.title();
+	.marginb6();
+	.basefont();
 }
 
 .cat-count {
-	.small();
+	.smallfont(@color999);
 }
 
 .cat-images {

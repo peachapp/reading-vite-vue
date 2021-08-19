@@ -215,17 +215,14 @@ onGetBookDetail();
 	}
 
 	.book-title {
-		margin-bottom: @s6;
-		font-size: @fs14;
-		font-weight: 600;
-		color: @color000;
+		.marginb6();
+		.basefont();
 	}
 
 	.book-author,
 	.book-tag {
-		margin-bottom: @s6;
-		font-size: @fs12;
-		color: @color999;
+		.marginb6();
+		.smallfont(@color999);
 	}
 
 	.book-tag span {
@@ -248,14 +245,12 @@ onGetBookDetail();
 	flex: 1;
 
 	.custom-title {
-		font-size: @fs14;
-		color: @color000;
+		.marginb6();
+		.smallfont();
 	}
 
 	.custom-label {
-		margin-top: @s6;
-		font-size: @fs12;
-		color: @color999;
+		.smallfont(@color999);
 	}
 }
 
@@ -263,8 +258,7 @@ onGetBookDetail();
 .book-copyright {
 	padding: @s12;
 	background: @colorfff;
-	font-size: @fs12;
-	color: @color999;
+	.smallfont(@color999);
 }
 
 .cell-group-container {
@@ -274,8 +268,7 @@ onGetBookDetail();
 
 	.custom-label {
 		margin-left: @s6;
-		font-size: @fs12;
-		color: @color999;
+		.smallfont(@color999);
 	}
 }
 
@@ -286,7 +279,6 @@ onGetBookDetail();
 .read-btn {
 	width: 150px;
 	height: 50px;
-	font-size: @fs18;
-	font-weight: 600;
+	.basefont();
 }
 </style>

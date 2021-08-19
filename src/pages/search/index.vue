@@ -213,8 +213,7 @@ onGetSearchHotWords();
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: @fs12;
-	color: @color999;
+	.smallfont(@color999);
 }
 
 .hotwords-container,
@@ -242,24 +241,19 @@ onGetSearchHotWords();
 	}
 
 	.res-title {
-		margin-bottom: @s6;
-		font-size: @fs14;
-		font-weight: 600;
-		color: @color000;
+		.marginb6();
+		.basefont();
 	}
 
 	.res-author {
-		margin-bottom: @s6;
-		font-size: @fs12;
-		font-weight: 600;
-		color: @color999;
+		.marginb6();
+		.smallfont(@color999);
 	}
 
 	.res-desc {
-		margin-bottom: @s6;
+		.marginb6();
 		.ell2();
-		font-size: @fs12;
-		color: @color999;
+		.smallfont(@color999);
 	}
 }
 </style>

@@ -23,37 +23,52 @@
 @s12: 12px;
 @s6: 6px;
 
-.pagetitle() {
-  font-size: @fs18;
-  font-weight: 600;
-  color: @colorfff  !important;
+// 页面一级标题
+.pagetitle1() {
+	font-size: @fs18;
+	font-weight: 600;
+	color: @colorfff !important;
 }
 
-.title(@ft: 600) {
-  margin-bottom: @s6;
-  font-size: @fs14;
-  font-weight: @ft;
-  color: @color000;
+// 正常的字体大小 14
+.basefont(@color: #000, @fw: 600) {
+	font-size: @fs14;
+	font-weight: @fw;
+	color: @color;
 }
 
-.small(@fw: 'normal') {
-  font-size: @fs12;
-  color: @color999;
-  font-weight: @fw;
+// 稍小一点的字体大小 12
+.smallfont(@color: #000, @fw: 100) {
+	font-size: @fs12;
+	font-weight: @fw;
+	color: @color;
 }
 
+// 更小一点的字体 10
+.minifont(@color: #000, @fw: 100) {
+	font-size: @fs10;
+	font-weight: @fw;
+	color: @color;
+}
+
+// 单行省略号
 .ell1() {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  word-break: break-all;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: break-all;
 }
 
+// 多行省略号，默认为2行
 .ell2(@num: 2) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: @num;
-  -webkit-box-orient: vertical;
-  flex-direction: column;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: @num;
+	-webkit-box-orient: vertical;
+	flex-direction: column;
+}
+
+.marginb6() {
+	margin-bottom: @s6;
 }

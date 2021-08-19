@@ -182,16 +182,14 @@ const onActionsheetHide = () => {
 	}
 
 	.bookshelf-image {
-		margin-bottom: @s6;
+		.marginb6();
 		height: 120px;
 	}
 
 	.bookshelf-title {
-		margin-bottom: @s6;
-		font-size: @fs12;
-		font-weight: 600;
-		color: @color000;
+		.marginb6();
 		.ell1();
+		.smallfont(@color000, 400);
 	}
 }
 
@@ -200,16 +198,13 @@ const onActionsheetHide = () => {
 		padding: 80px 0 @s24;
 		text-align: center;
 		line-height: @s24;
-		font-size: @fs14;
-		font-weight: 600;
-		color: @color000;
+		.basefont();
 	}
 
 	.find-btn {
 		box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.4);
 		border-radius: 10px;
-		font-size: @fs16;
-		font-weight: 600;
+		.basefont();
 	}
 }
 </style>

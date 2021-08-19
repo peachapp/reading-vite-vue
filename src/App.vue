@@ -23,8 +23,8 @@ html {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-size: @fs14;
-	color: @color333;
+
+	.basefont(@color333, 100);
 	background: @colorBg;
 }
 
@@ -37,7 +37,7 @@ html {
 	background-color: @colorPrimary !important;
 
 	.van-nav-bar__title {
-		.pagetitle();
+		.pagetitle1();
 	}
 }
 
