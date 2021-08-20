@@ -2,12 +2,10 @@
 	<div class="flipbook-viewport">
 		<div class="container">
 			<div class="flipbook">
-				<div>
-					<div
-						class="flipbook-content"
-						:style="{ fontSize: config.fontSize + 'px' }"
-					>
-						{{ contents }}
+				<div v-for="(item, index) in contents" :key="index">
+					<div class="flipbook-content norem">
+						<!-- :style="{ fontSize: config.fontSize + 'px' }" -->
+						{{ item }}
 					</div>
 				</div>
 				<div>222</div>
@@ -38,14 +36,22 @@ const contents = computed(() => {
 	const columnCount = Math.floor(
 		(window.innerWidth - 24) / props.config.fontSize || 14,
 	);
-
 	const lineCount = Math.floor(
-		(window.innerHeight - 24) / ((props.config.fontSize || 14) + 12),
+		(window.innerHeight - 24) / ((props.config.fontSize || 14) * 1.2),
 	);
+	const pageCount = columnCount * lineCount;
 
-	console.log('colu', columnCount, 'lin', lineCount);
+	let index = 0;
+	let result = [];
 
-	return props.content + 'fffffff';
+	while (index < Math.ceil(props.content.length / pageCount)) {
+		const indexContent = props.content.substr(index * pageCount, pageCount);
+		result.push(indexContent);
+		index = index + 1;
+	}
+
+	console.log('pagecount', pageCount, result);
+	return result;
 });
 
 const loadApp = () => {
@@ -99,6 +105,7 @@ onMounted(() => {
 
 .flipbook-viewport .page {
 	background-color: white;
+	// background-color: rgb(255, 250, 240);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
@@ -137,6 +144,6 @@ onMounted(() => {
 .flipbook-content {
 	padding: @s12;
 	box-sizing: border-box;
-	line-height: 1.4;
+	line-height: 2;
 }
 </style>
