@@ -3,22 +3,23 @@
 		<div class="container">
 			<div class="flipbook">
 				<div v-for="(item, index) in contents" :key="index">
-					<div class="flipbook-content norem">
-						<!-- :style="{ fontSize: config.fontSize + 'px' }" -->
-						{{ item }}
+					<div
+						class="chapter-container"
+						:style="{ fontSize: config.fontSize + 'px' }"
+					>
+						<div class="chapter-header">
+							<div class="chapter-title">
+								{{ chapter.title }}
+							</div>
+							<div class="chapter-page">
+								{{ index + 1 }}/{{ contents.length }}
+							</div>
+						</div>
+						<div class="chapter-content overflowauto">
+							{{ item }}
+						</div>
 					</div>
 				</div>
-				<div>222</div>
-				<div>333</div>
-				<div>444</div>
-				<div>555</div>
-				<div>666</div>
-				<div>777</div>
-				<div>888</div>
-				<div>999</div>
-				<div>101010</div>
-				<div>111111</div>
-				<div>121212</div>
 			</div>
 		</div>
 	</div>
@@ -28,7 +29,7 @@
 import { onMounted, computed } from 'vue';
 
 const props = defineProps({
-	content: String,
+	chapter: Object,
 	config: Object,
 });
 
@@ -44,13 +45,18 @@ const contents = computed(() => {
 	let index = 0;
 	let result = [];
 
-	while (index < Math.ceil(props.content.length / pageCount)) {
-		const indexContent = props.content.substr(index * pageCount, pageCount);
+	while (
+		index < Math.ceil((props.chapter.cpContent || '').length / pageCount)
+	) {
+		const indexContent = (props.chapter.cpContent || '').substr(
+			index * pageCount,
+			pageCount,
+		);
 		result.push(indexContent);
 		index = index + 1;
 	}
 
-	console.log('pagecount', pageCount, result);
+	console.log('contents', props.content, result);
 	return result;
 });
 
@@ -104,8 +110,8 @@ onMounted(() => {
 }
 
 .flipbook-viewport .page {
-	background-color: white;
-	// background-color: rgb(255, 250, 240);
+	// background-color: white;
+	background-color: rgb(255, 250, 240);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
@@ -141,9 +147,26 @@ onMounted(() => {
 	box-shadow: 0 0 20px #ccc;
 }
 
-.flipbook-content {
+.chapter-container {
+	height: 100%;
+}
+
+.chapter-header {
 	padding: @s12;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.chapter-title {
+	.pagetitle2();
+}
+
+.chapter-content {
+	padding: 0 @s12 @s12;
+	height: calc(100% - 47px);
 	box-sizing: border-box;
 	line-height: 2;
+	word-break: break-all;
 }
 </style>

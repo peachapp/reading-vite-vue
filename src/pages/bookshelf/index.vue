@@ -18,7 +18,7 @@
 						class="bookshelf-item"
 						v-for="(item, index) in historyBookshelfList"
 						:key="index"
-						@click="onToReading(item._id)"
+						@click="onToReading(item._id, item.sourceId)"
 						@dblclick="onActionsheetShow(item._id)"
 					>
 						<coverImage class="bookshelf-image" :path="item.cover" />
@@ -97,7 +97,7 @@ const onTobookcity = () => {
 };
 
 // 跳转到reading
-const onToReading = (bookId) => {
+const onToReading = (bookId, sourceId) => {
 	if (clickTimer) {
 		window.clearTimeout(clickTimer);
 		clickTimer = null;
@@ -105,7 +105,10 @@ const onToReading = (bookId) => {
 	clickTimer = window.setTimeout(() => {
 		router.push({
 			name: 'reading',
-			query: { bookId },
+			query: {
+				bookId,
+				sourceId,
+			},
 		});
 	}, 300);
 };

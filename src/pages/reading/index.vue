@@ -1,9 +1,12 @@
 <template>
 	<div class="page-container">
-		<!-- <div class="chapter-title">第一章</div> -->
-		<div class="chapter-content">
-			<eBook :content="content" config="ddd" />
-		</div>
+		<eBook
+			v-if="currentChapter"
+			:chapter="currentChapter"
+			:config="{
+				fontSize: 14,
+			}"
+		/>
 	</div>
 </template>
 
@@ -12,7 +15,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import eBook from '@/components/eBook.vue';
 import { getBookChapters2, getChapterContent } from '@/axios';
-import { content } from './content';
+// import { content } from './content';
 
 const route = useRoute();
 
@@ -22,16 +25,16 @@ const bookId = ref(route.query.bookId);
 const sourceId = ref(route.query.sourceId);
 const chapterList = ref([]);
 
+const currentChapter = ref(null);
+
 // 获取小说章节内容
 const onGetChapterContent = async () => {
 	try {
 		const res = await getChapterContent({
 			link: chapterList.value[0].link,
 		});
-		console.log('resssss', res);
-		if (res.result.code === 0) {
-			console.log('content', res);
-			// chapterList.value = res.data.chapters || [];
+		if (res.ok) {
+			currentChapter.value = res.chapter || {};
 		}
 	} catch (error) {
 		console.log(error);
@@ -57,6 +60,5 @@ onGetBookChapters();
 <style lang="less" scoped>
 .page-container {
 	height: 100%;
-	background-color: rgb(255, 250, 240);
 }
 </style>
