@@ -44,6 +44,11 @@ export default defineConfig({
         target: "http://api.zhuishushenqi.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
+      },
+      "/chapter": {
+        target: "http://chapterup.zhuishushenqi.com/chapter",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/chapter/, "")
       }
     }
   }

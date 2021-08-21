@@ -63,7 +63,7 @@ const routes = [
   },
   // 书籍详情
   {
-    path: "/bookdetail/:bookId",
+    path: "/bookdetail",
     name: "bookdetail",
     meta: {
       title: "书籍详情",
@@ -73,7 +73,7 @@ const routes = [
   },
   // reading
   {
-    path: "/reading/:bookId",
+    path: "/reading",
     name: "reading",
     meta: {
       title: "阅读",

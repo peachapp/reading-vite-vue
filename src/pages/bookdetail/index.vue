@@ -135,14 +135,14 @@ import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
 import { cloneDeep } from 'lodash';
 import coverImage from '@/components/coverImage.vue';
-import { getBookDetail } from '@/axios';
+import { getBookDetail, getAtoc } from '@/axios';
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
 // 书籍号
-const bookId = ref(route.params.bookId);
+const bookId = ref(route.query.bookId);
 const bookDetail = ref({});
 // 评分
 const bookScore = computed(() => {
@@ -169,6 +169,17 @@ const onGetBookDetail = async () => {
 			bookId: bookId.value,
 		});
 		bookDetail.value = res || {};
+		onGetAtoc();
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+// 获取小说源
+const onGetAtoc = async () => {
+	try {
+		const res = await getAtoc({ bookId: bookId.value });
+		bookDetail.value.sourceId = ((res || [])[0] || {})._id;
 	} catch (error) {
 		console.log(error);
 	}
@@ -193,7 +204,10 @@ watch(historyBookshelfList.value, (newValue) => {
 const onToReading = () => {
 	router.push({
 		name: 'reading',
-		params: { bookId: bookId.value },
+		query: {
+			bookId: bookId.value,
+			sourceId: bookDetail.value.sourceId,
+		},
 	});
 };
 

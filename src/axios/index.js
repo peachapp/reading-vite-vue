@@ -53,18 +53,26 @@ export const getBookDetail = data => {
 };
 
 // 7.获取小说正版源 0
-export const getBtoc = () => {
+export const getBtoc = data => {
   return service({
     url: `/api/btoc`,
-    method: "get"
+    method: "get",
+    params: {
+      view: "summary",
+      book: data.bookId
+    }
   });
 };
 
-// 8.获取小说正版源于盗版源(混合) 0
-export const getAtoc = () => {
+// 8.获取小说正版源于盗版源(混合)
+export const getAtoc = data => {
   return service({
     url: `/api/atoc`,
-    method: "get"
+    method: "get",
+    params: {
+      view: "summary",
+      book: data.bookId
+    }
   });
 };
 
@@ -74,12 +82,12 @@ export const getBookChapters1 = data => {
     url: `/api/mix-atoc/${data.bookId}`,
     method: "get",
     params: {
-      view: 'chapters'
+      view: "chapters"
     }
   });
 };
 
-// 10.获取小说章节(根据小说源id)
+// 10.获取小说章节(根据小说源id) 源id由8获取
 export const getBookChapters2 = data => {
   return service({
     url: `/api/atoc/${data.bookId}`,
@@ -93,7 +101,7 @@ export const getBookChapters2 = data => {
 // 11.获取小说章节内容 0.5
 export const getChapterContent = data => {
   return service({
-    url: `/api/chapter/${data.link}`,
+    url: `/chapter/${encodeURIComponent(data.link)}`,
     method: 'get'
   });
 };

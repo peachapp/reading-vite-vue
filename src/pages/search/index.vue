@@ -174,7 +174,7 @@ watch(keyWordsHistory.value, (newValue) => {
 const onToBookDetail = (bookId) => {
 	router.push({
 		name: 'bookdetail',
-		params: { bookId },
+		query: { bookId },
 	});
 };
 

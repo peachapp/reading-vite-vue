@@ -105,7 +105,7 @@ const onToReading = (bookId) => {
 	clickTimer = window.setTimeout(() => {
 		router.push({
 			name: 'reading',
-			params: { bookId },
+			query: { bookId },
 		});
 	}, 300);
 };
@@ -114,7 +114,7 @@ const onToReading = (bookId) => {
 const onToBookDetail = (bookId) => {
 	router.push({
 		name: 'bookdetail',
-		params: { bookId },
+		query: { bookId },
 	});
 };
 

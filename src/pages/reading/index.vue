@@ -17,7 +17,9 @@ import { content } from './content';
 const route = useRoute();
 
 // 书籍号
-const bookId = ref(route.params.bookId);
+const bookId = ref(route.query.bookId);
+// 源id
+const sourceId = ref(route.query.sourceId);
 const chapterList = ref([]);
 
 // 获取小说章节内容
@@ -40,7 +42,7 @@ const onGetChapterContent = async () => {
 const onGetBookChapters = async () => {
 	try {
 		const res = await getBookChapters2({
-			bookId: bookId.value,
+			bookId: sourceId.value,
 		});
 		chapterList.value = res.chapters || [];
 		onGetChapterContent();

@@ -150,7 +150,7 @@ const onSwipeTabChange = (index, value) => {
 const onToBookDetail = (bookId) => {
 	router.push({
 		name: 'bookdetail',
-		params: { bookId },
+		query: { bookId },
 	});
 };
 
