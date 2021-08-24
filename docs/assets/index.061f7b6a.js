@@ -1,0 +1,1 @@
+import{_ as a}from"./eBook.0f21a3d6.js";import{t as s,v as o,o as t,x as c,q as d}from"./vendor.8d857a94.js";s("data-v-6c711c36");const e={class:"container"};o();const r={setup:s=>(s,o)=>(t(),c("div",e,[d(a)])),__scopeId:"data-v-6c711c36"};export{r as default};
