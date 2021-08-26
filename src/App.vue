@@ -10,6 +10,7 @@ import { useStore } from 'vuex';
 const store = useStore();
 store.dispatch('onGetBookshelfList');
 store.dispatch('onGetKeyWords');
+store.dispatch('onGetChapterIndexs');
 </script>
 
 <style lang="less">

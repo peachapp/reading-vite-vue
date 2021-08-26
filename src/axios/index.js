@@ -98,7 +98,7 @@ export const getBookChapters2 = data => {
   });
 };
 
-// 11.获取小说章节内容 0.5
+// 11.获取小说章节内容
 export const getChapterContent = data => {
   return service({
     url: `/chapter/${encodeURIComponent(data.link)}`,

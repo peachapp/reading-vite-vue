@@ -8,6 +8,7 @@ export default createStore({
     imgTarget: "http://statics.zhuishushenqi.com",
     bookshelfList: [], // 书架
     keyWords: [], // 历史搜索
+    chapterIndexs: {}, // 书籍章节index
   },
   mutations: {
     update_categories(state, data) {
@@ -21,6 +22,9 @@ export default createStore({
     },
     update_keyWords(state, data) {
       state.keyWords = data || [];
+    },
+    update_chapterIndexs(state, data) {
+      state.chapterIndexs = data || {};
     }
   },
   actions: {
@@ -52,6 +56,22 @@ export default createStore({
       try {
         await yuxStorage.setItem('keyWords', data);
         commit("update_keyWords", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async onGetChapterIndexs({ commit }) {
+      try {
+        const res = await yuxStorage.getItem('chapterIndexs');
+        commit("update_chapterIndexs", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async onSetChapterIndexs({ commit }, data) {
+      try {
+        await yuxStorage.setItem('chapterIndexs', data);
+        commit("update_chapterIndexs", data);
       } catch (error) {
         console.log(error);
       }
