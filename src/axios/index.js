@@ -52,7 +52,7 @@ export const getBookDetail = data => {
   });
 };
 
-// 7.获取小说正版源 0
+// 7.获取小说正版源
 export const getBtoc = data => {
   return service({
     url: `/api/btoc`,
@@ -76,7 +76,7 @@ export const getAtoc = data => {
   });
 };
 
-// 9.获取小说章节(根据小说id) 0
+// 9.获取小说章节(根据小说id)
 export const getBookChapters1 = data => {
   return service({
     url: `/api/mix-atoc/${data.bookId}`,

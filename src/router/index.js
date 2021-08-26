@@ -71,6 +71,16 @@ const routes = [
     },
     component: () => import("@/pages/bookdetail/index.vue"),
   },
+  // 章节列表
+  {
+    path: "/chapters",
+    name: "chapters",
+    meta: {
+      title: "章节列表",
+      keepAlive: true
+    },
+    component: () => import("@/pages/bookdetail/chapters.vue")
+  },
   // reading
   {
     path: "/reading",
@@ -79,7 +89,7 @@ const routes = [
       title: "阅读",
       keepAlive: true
     },
-    component: () => import("@/pages/reading/index.vue"),
+    component: () => import("@/pages/bookdetail/reading.vue"),
   },
   // 测试
   {

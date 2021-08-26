@@ -139,7 +139,7 @@ onGetBookChapters();
 
 <style lang="less" scoped>
 .page-container {
-	height: 100%;
+
 }
 
 .flipbook-viewport {

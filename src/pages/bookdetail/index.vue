@@ -83,7 +83,7 @@
 						</span>
 					</template>
 				</van-cell>
-				<van-cell is-link icon="notes-o">
+				<van-cell is-link icon="notes-o" @click="onToChapters">
 					<template #title>
 						<span class="custom-title">目录</span>
 						<span class="custom-label">{{ bookDetail.lastChapter }}</span>
@@ -204,6 +204,17 @@ watch(historyBookshelfList.value, (newValue) => {
 const onToReading = () => {
 	router.push({
 		name: 'reading',
+		query: {
+			bookId: bookId.value,
+			sourceId: bookDetail.value.sourceId,
+		},
+	});
+};
+
+// 跳转到章节列表
+const onToChapters = () => {
+	router.push({
+		name: 'chapters',
 		query: {
 			bookId: bookId.value,
 			sourceId: bookDetail.value.sourceId,
