@@ -11,12 +11,6 @@ export default createStore({
     chapterIndexs: {}, // 书籍章节index
   },
   mutations: {
-    update_categories(state, data) {
-      state.categories = data || [];
-    },
-    update_hotSearch(state, data) {
-      state.hotSearch = data || [];
-    },
     update_bookshelfList(state, data) {
       state.bookshelfList = data || [];
     },
@@ -28,6 +22,7 @@ export default createStore({
     }
   },
   actions: {
+    // 书架
     async onGetBookshelfList({ commit }) {
       try {
         const res = await yuxStorage.getItem('bookshelfList');
@@ -44,6 +39,7 @@ export default createStore({
         console.log(error);
       }
     },
+    // 历史搜索
     async onGetKeyWords({ commit }) {
       try {
         const res = await yuxStorage.getItem('keyWords');
@@ -60,6 +56,7 @@ export default createStore({
         console.log(error);
       }
     },
+    // 书籍章节index
     async onGetChapterIndexs({ commit }) {
       try {
         const res = await yuxStorage.getItem('chapterIndexs');

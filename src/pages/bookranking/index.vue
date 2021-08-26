@@ -44,7 +44,7 @@
 								<div class="rank-author">{{ rankItem.author }}</div>
 								<div class="rank-desc">{{ rankItem.shortIntro }}</div>
 								<div>
-									<van-tag plain>
+									<van-tag class="page-tag" plain>
 										{{ rankItem.minorCate }}
 									</van-tag>
 								</div>

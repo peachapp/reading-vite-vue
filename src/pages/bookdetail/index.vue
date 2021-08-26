@@ -22,8 +22,8 @@
 					</div>
 					<div>
 						<van-tag
+							class="page-tag"
 							style="margin-right: 12px"
-							color="#12ab76"
 							plain
 							v-for="(tagItem, tagIndex) in bookDetail.tags"
 							:key="tagIndex"
