@@ -35,7 +35,7 @@ export const getV2Categories = data => {
   });
 };
 
-// 5.根据分类获取小说列表 0
+// 5.根据分类获取小说列表
 export const getBookListByCategories = data => {
   return service({
     url: `/api/book/by-categories`,
