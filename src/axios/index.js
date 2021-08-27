@@ -90,7 +90,7 @@ export const getBookChapters1 = data => {
 // 10.获取小说章节(根据小说源id) 源id由8获取
 export const getBookChapters2 = data => {
   return service({
-    url: `/api/atoc/${data.bookId}`,
+    url: `/api/atoc/${data.sourceId}`,
     method: 'get',
     params: {
       view: 'chapters'

@@ -42,13 +42,13 @@ const config = ref({
 });
 
 // 书籍号
-const bookId = ref(route.query.bookId);
+const bookId = route.query.bookId;
 // 源id
-const sourceId = ref(route.query.sourceId);
+const sourceId = route.query.sourceId;
 // 章节列表
 const chapterList = ref([]);
 // 当前索引
-const currentChapterIndex = ref(store.state.chapterIndexs[bookId.value] || 0);
+const currentChapterIndex = ref(store.state.chapterIndexs[bookId] || 0);
 // 章节内容
 const chapterContents = ref([]);
 
@@ -57,9 +57,7 @@ const turning = ref(false);
 // 获取小说章节
 const onGetBookChapters = async () => {
 	try {
-		const res = await getBookChapters2({
-			bookId: sourceId.value,
-		});
+		const res = await getBookChapters2({ sourceId });
 		chapterList.value = res.chapters || [];
 		onGetChapterContent();
 	} catch (error) {
@@ -88,7 +86,7 @@ watch(
 	() => currentChapterIndex.value,
 	(newValue) => {
 		const cloneValue = cloneDeep(store.state.chapterIndexs);
-		cloneValue[bookId.value] = newValue;
+		cloneValue[bookId] = newValue;
 		store.dispatch('onSetChapterIndexs', cloneValue);
 	},
 );
@@ -139,7 +137,6 @@ onGetBookChapters();
 
 <style lang="less" scoped>
 .page-container {
-
 }
 
 .flipbook-viewport {

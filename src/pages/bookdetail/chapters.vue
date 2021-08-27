@@ -33,18 +33,16 @@ const router = useRouter();
 const route = useRoute();
 
 // 书籍号
-const bookId = ref(route.query.bookId);
+const bookId = route.query.bookId;
 // 源id
-const sourceId = ref(route.query.sourceId);
+const sourceId = route.query.sourceId;
 // 章节列表
 const chapterList = ref([]);
 
 // 获取小说章节
 const onGetBookChapters = async () => {
 	try {
-		const res = await getBookChapters2({
-			bookId: sourceId.value,
-		});
+		const res = await getBookChapters2({ sourceId });
 		chapterList.value = res.chapters || [];
 	} catch (error) {
 		console.log(error);
@@ -60,7 +58,7 @@ const onBack = () => {
 const onFastForward = (id) => {
 	const cloneValue = cloneDeep(store.state.chapterIndexs);
 	const index = chapterList.value.findIndex((item) => item.id === id);
-	cloneValue[bookId.value] = index;
+	cloneValue[bookId] = index;
 	store.dispatch('onSetChapterIndexs', cloneValue);
 	nextTick(() => {
 		onToReading();
@@ -72,8 +70,8 @@ const onToReading = () => {
 	router.push({
 		name: 'reading',
 		query: {
-			bookId: bookId.value,
-			sourceId: sourceId.value,
+			bookId: bookId,
+			sourceId: sourceId,
 		},
 	});
 };
