@@ -17,7 +17,7 @@
 				/>
 			</van-tabs>
 		</div>
-		<div class="cat-container">
+		<div class="page-content">
 			<div
 				v-if="v2categories && v2categories.length > 0"
 				class="mins-container overflowauto"
@@ -36,10 +36,27 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				list
-				<coverImage />
-			</div>
+			<RecycleScroller
+				class="book-container overflowauto"
+				:items="bookList"
+				:item-size="140"
+				key-field="_id"
+				v-slot="{ item }"
+			>
+				<div class="book-item" @click="onToBookDetail(item._id)">
+					<coverImage class="book-image" :path="item.cover" />
+					<div class="book-content">
+						<div class="book-title">{{ item.title }}</div>
+						<div class="book-author">{{ item.author }}</div>
+						<div class="book-desc">{{ item.shortIntro }}</div>
+						<div>
+							<van-tag class="page-tag" plain>
+								{{ item.minorCate }}
+							</van-tag>
+						</div>
+					</div>
+				</div>
+			</RecycleScroller>
 		</div>
 	</div>
 </template>
@@ -87,6 +104,7 @@ let activeKey = ref(0);
 let activeKey2 = ref(0);
 // 小类列表
 let v2categories = ref({});
+const bookList = ref([]);
 
 // 返回
 const onBack = () => {
@@ -102,6 +120,7 @@ const onGetV2Categories = async () => {
 				(item) => item.major === major,
 			);
 			v2categories.value = ((res[gender] || [])[majorIndex] || {}).mins || [];
+			onGetBookListByCategories();
 		}
 	} catch (error) {
 		console.log(error);
@@ -117,9 +136,12 @@ const onGetBookListByCategories = async () => {
 			type: typeMapping[activeKey.value].en,
 			minor: v2categories.value[activeKey2],
 			start: 0,
-			limit: 9,
+			limit: 1000000,
 		});
-		console.log('list res', res);
+		if (res.ok) {
+			bookList.value = res.books || [];
+			console.log('booklist', bookList.value);
+		}
 	} catch (error) {
 		console.log(error);
 	}
@@ -133,6 +155,14 @@ const onTabChange = (index) => {
 // tab2切换
 const onTab2Change = (index) => {
 	activeKey2.value = index;
+};
+
+// 查看书籍详情
+const onToBookDetail = (bookId) => {
+	router.push({
+		name: 'bookdetail',
+		query: { bookId },
+	});
 };
 
 onGetV2Categories();
@@ -158,7 +188,7 @@ onGetV2Categories();
 	background-color: @colorPrimary;
 }
 
-.cat-container {
+.page-content {
 	height: calc(100% - 44px);
 	padding-top: @s12;
 	display: flex;
@@ -200,6 +230,43 @@ onGetV2Categories();
 		top: 50%;
 		left: 0;
 		background: @colorPrimary;
+	}
+}
+
+.book-container {
+	flex: 1;
+	height: 100%;
+	padding: 0 @s12;
+
+	.book-item {
+		margin-bottom: @s12;
+		display: flex;
+		align-items: center;
+	}
+
+	.book-image {
+		margin-right: @s12;
+		width: 80px;
+		height: 110px;
+		flex-shrink: 0;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+
+	.book-title {
+		.marginb6();
+		.basefont();
+	}
+
+	.book-author {
+		.marginb6();
+		.smallfont(@color999);
+	}
+
+	.book-desc {
+		.marginb6();
+		.ell2();
+		.smallfont(@color999);
 	}
 }
 </style>
