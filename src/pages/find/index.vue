@@ -4,7 +4,7 @@
 			<van-tabs v-model:active="activeKey" @change="onTabChange">
 				<van-tab
 					v-for="(item, index) in keyMapping"
-					:key="index"
+					:key="item.en"
 					:name="index * 1"
 					:title="item.zh"
 				/>
@@ -18,14 +18,15 @@
 		>
 			<van-swipe-item
 				class="overflowauto"
-				v-for="(item, index) in keyMapping"
-				:key="index"
+				v-for="item in keyMapping"
+				:key="item.en"
 			>
 				<div class="swipe-item">
 					<div
 						class="cat-item"
-						v-for="(catItem, catIndex) in categories[item.en]"
-						:key="catIndex"
+						v-for="catItem in categories[item.en]"
+						:key="catItem.name"
+						@click="onToV2categories(catItem.name)"
 					>
 						<div class="cat-left">
 							<div class="cat-name">
@@ -50,28 +51,31 @@
 
 <script setup>
 import { ref } from 'vue';
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import coverImage from '@/components/coverImage.vue';
 import { getAllCategories } from '@/axios';
 
-const keyMapping = ref({
-	0: {
+const router = useRouter();
+
+const keyMapping = [
+	{
 		en: 'male',
 		zh: '男生',
 	},
-	1: {
+	{
 		en: 'female',
 		zh: '女生',
 	},
-	2: {
+	{
 		en: 'picture',
 		zh: '标签',
 	},
-	3: {
+	{
 		en: 'press',
 		zh: '出版',
 	},
-});
+];
+
 // 当前分类
 let activeKey = ref(0);
 // 分类列表
@@ -99,6 +103,17 @@ const onTabChange = (index) => {
 // swipe切换
 const onSwipeChange = (index) => {
 	activeKey.value = index;
+};
+
+// 跳转到小类别
+const onToV2categories = (name) => {
+	router.push({
+		name: 'v2categories',
+		query: {
+			gender: keyMapping[activeKey.value].en,
+			major: name,
+		},
+	});
 };
 
 onGetAllCategories();

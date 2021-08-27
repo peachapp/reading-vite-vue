@@ -26,7 +26,7 @@ export const getRankList = data => {
   });
 };
 
-// 4.获取分类下小类别 0
+// 4.获取分类下小类别
 export const getV2Categories = data => {
   return service({
     url: `/api/cats/lv2`,
