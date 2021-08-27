@@ -3,7 +3,7 @@
 		<div class="flipbook-viewport">
 			<div class="container">
 				<div class="flipbook">
-					<div v-for="(item, index) in chapterContents" :key="index">
+					<div v-for="item in chapterContents" :key="item._id">
 						<div class="chapter-container">
 							<div class="chapter-header">
 								<div class="chapter-title">

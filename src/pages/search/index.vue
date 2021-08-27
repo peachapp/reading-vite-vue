@@ -70,8 +70,8 @@
 				</van-loading>
 				<div v-else-if="searchResList && searchResList.length > 0">
 					<div
-						v-for="(item, index) in searchResList"
-						:key="index"
+						v-for="item in searchResList"
+						:key="item._id"
 						class="res-item"
 						@click="onToBookDetail(item._id)"
 					>

@@ -16,8 +16,8 @@
 				>
 					<div
 						class="bookshelf-item"
-						v-for="(item, index) in historyBookshelfList"
-						:key="index"
+						v-for="item in historyBookshelfList"
+						:key="item._id"
 						@click="onToReading(item._id, item.sourceId)"
 						@dblclick="onActionsheetShow(item._id)"
 					>
