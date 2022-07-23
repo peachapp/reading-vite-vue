@@ -1,10 +1,32 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-// import less from "less";
-import { Button, Tabbar, TabbarItem, NavBar, Search, PullRefresh, Image as VanImage, Empty, List, Tag, Loading, Cell, CellGroup, Swipe, SwipeItem, Tab, Tabs, Icon, Rate, ActionSheet } from "vant";
-import "./config/rem";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import VueVirtualScroller from 'vue-virtual-scroller';
+import {
+	Button,
+	Tabbar,
+	TabbarItem,
+	NavBar,
+	Search,
+	PullRefresh,
+	Image as VanImage,
+	Empty,
+	List,
+	Tag,
+	Loading,
+	Cell,
+	CellGroup,
+	Swipe,
+	SwipeItem,
+	Tab,
+	Tabs,
+	Icon,
+	Rate,
+	ActionSheet,
+} from 'vant';
+import './config/rem';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
 const app = createApp(App);
 
@@ -16,6 +38,7 @@ const a = 123;
 // app.use(less);
 
 // 全局注册组件
+app.use(VueVirtualScroller);
 app.use(Button);
 app.use(Tabbar);
 app.use(TabbarItem);
@@ -37,4 +60,4 @@ app.use(Icon);
 app.use(Rate);
 app.use(ActionSheet);
 
-app.mount("#app");
+app.mount('#app');

@@ -1,0 +1,1 @@
+import{u as s,r,o as t,c as a,J as n}from"./vendor.8d857a94.js";const o={props:{path:String},setup(o){const e=s().state.imgTarget;return(s,p)=>{const c=r("van-image");return t(),a(c,{src:n(e)+o.path},null,8,["src"])}}};export{o as _};

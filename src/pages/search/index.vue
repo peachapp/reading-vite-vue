@@ -31,11 +31,10 @@
 					<span> 查看更多 </span>
 				</div>
 				<van-tag
-					class="hotwords-item"
+					class="hotwords-item page-tag"
 					v-for="(item, index) in 10"
 					round
 					color="#e7e8ea"
-					text-color="#333"
 					:key="index"
 					@click="onSearchByInk(searchHotWords[index].word)"
 				>
@@ -52,11 +51,10 @@
 					<span @click="onClearKeyWordsHistory"> 清空 </span>
 				</div>
 				<van-tag
-					class="keywords-item"
+					class="keywords-item page-tag"
 					v-for="(item, index) in keyWordsHistory"
 					round
 					color="#e7e8ea"
-					text-color="#333"
 					:key="index"
 					@click="onSearchByInk(item)"
 				>
@@ -72,8 +70,8 @@
 				</van-loading>
 				<div v-else-if="searchResList && searchResList.length > 0">
 					<div
-						v-for="(item, index) in searchResList"
-						:key="index"
+						v-for="item in searchResList"
+						:key="item._id"
 						class="res-item"
 						@click="onToBookDetail(item._id)"
 					>
@@ -83,10 +81,10 @@
 							<div class="res-author">{{ item.author }}</div>
 							<div class="res-desc">{{ item.shortIntro }}</div>
 							<div>
-								<van-tag plain style="margin-right: 6px">
+								<van-tag class="page-tag" plain style="margin-right: 6px">
 									{{ item.chapterStatus === 'END' ? '已完结' : '连载' }}
 								</van-tag>
-								<van-tag plain>{{ item.cat }}</van-tag>
+								<van-tag class="page-tag" plain>{{ item.cat }}</van-tag>
 							</div>
 						</div>
 					</div>

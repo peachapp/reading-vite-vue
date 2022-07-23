@@ -10,6 +10,7 @@ import { useStore } from 'vuex';
 const store = useStore();
 store.dispatch('onGetBookshelfList');
 store.dispatch('onGetKeyWords');
+store.dispatch('onGetChapterIndexs');
 </script>
 
 <style lang="less">
@@ -53,5 +54,12 @@ html {
 .overflowauto::-webkit-scrollbar {
 	/* Chrome Safari */
 	display: none;
+}
+
+.page-tag {
+	padding-top: 3px !important;
+	padding-bottom: 3px !important;
+	line-height: 1 !important;
+	.minifont(@colorPrimary) !important;
 }
 </style>

@@ -22,8 +22,8 @@
 					</div>
 					<div>
 						<van-tag
+							class="page-tag"
 							style="margin-right: 12px"
-							color="#12ab76"
 							plain
 							v-for="(tagItem, tagIndex) in bookDetail.tags"
 							:key="tagIndex"
@@ -83,7 +83,7 @@
 						</span>
 					</template>
 				</van-cell>
-				<van-cell is-link icon="notes-o">
+				<van-cell is-link icon="notes-o" @click="onToChapters">
 					<template #title>
 						<span class="custom-title">目录</span>
 						<span class="custom-label">{{ bookDetail.lastChapter }}</span>
@@ -142,7 +142,7 @@ const router = useRouter();
 const route = useRoute();
 
 // 书籍号
-const bookId = ref(route.query.bookId);
+const bookId = route.query.bookId;
 const bookDetail = ref({});
 // 评分
 const bookScore = computed(() => {
@@ -165,9 +165,7 @@ const onBack = () => {
 // 书籍详情
 const onGetBookDetail = async () => {
 	try {
-		const res = await getBookDetail({
-			bookId: bookId.value,
-		});
+		const res = await getBookDetail({ bookId });
 		bookDetail.value = res || {};
 		onGetAtoc();
 	} catch (error) {
@@ -178,7 +176,7 @@ const onGetBookDetail = async () => {
 // 获取小说源
 const onGetAtoc = async () => {
 	try {
-		const res = await getAtoc({ bookId: bookId.value });
+		const res = await getAtoc({ bookId });
 		bookDetail.value.sourceId = ((res || [])[0] || {})._id;
 	} catch (error) {
 		console.log(error);
@@ -205,7 +203,18 @@ const onToReading = () => {
 	router.push({
 		name: 'reading',
 		query: {
-			bookId: bookId.value,
+			bookId: bookId,
+			sourceId: bookDetail.value.sourceId,
+		},
+	});
+};
+
+// 跳转到章节列表
+const onToChapters = () => {
+	router.push({
+		name: 'chapters',
+		query: {
+			bookId: bookId,
 			sourceId: bookDetail.value.sourceId,
 		},
 	});

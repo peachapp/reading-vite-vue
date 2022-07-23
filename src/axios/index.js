@@ -26,7 +26,7 @@ export const getRankList = data => {
   });
 };
 
-// 4.获取分类下小类别 0
+// 4.获取分类下小类别
 export const getV2Categories = data => {
   return service({
     url: `/api/cats/lv2`,
@@ -35,7 +35,7 @@ export const getV2Categories = data => {
   });
 };
 
-// 5.根据分类获取小说列表 0
+// 5.根据分类获取小说列表
 export const getBookListByCategories = data => {
   return service({
     url: `/api/book/by-categories`,
@@ -52,7 +52,7 @@ export const getBookDetail = data => {
   });
 };
 
-// 7.获取小说正版源 0
+// 7.获取小说正版源
 export const getBtoc = data => {
   return service({
     url: `/api/btoc`,
@@ -76,7 +76,7 @@ export const getAtoc = data => {
   });
 };
 
-// 9.获取小说章节(根据小说id) 0
+// 9.获取小说章节(根据小说id)
 export const getBookChapters1 = data => {
   return service({
     url: `/api/mix-atoc/${data.bookId}`,
@@ -90,7 +90,7 @@ export const getBookChapters1 = data => {
 // 10.获取小说章节(根据小说源id) 源id由8获取
 export const getBookChapters2 = data => {
   return service({
-    url: `/api/atoc/${data.bookId}`,
+    url: `/api/atoc/${data.sourceId}`,
     method: 'get',
     params: {
       view: 'chapters'
@@ -98,7 +98,7 @@ export const getBookChapters2 = data => {
   });
 };
 
-// 11.获取小说章节内容 0.5
+// 11.获取小说章节内容
 export const getChapterContent = data => {
   return service({
     url: `/chapter/${encodeURIComponent(data.link)}`,

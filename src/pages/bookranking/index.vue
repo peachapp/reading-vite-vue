@@ -4,7 +4,7 @@
 			<van-tabs v-model:active="activeKey" @change="onTabChange">
 				<van-tab
 					v-for="(item, index) in keyMapping"
-					:key="index"
+					:key="item.en"
 					:name="index * 1"
 					:title="item.zh"
 				/>
@@ -16,12 +16,12 @@
 			ref="swipeRef"
 			@change="onSwipeChange"
 		>
-			<van-swipe-item v-for="(item, index) in keyMapping" :key="index">
+			<van-swipe-item v-for="(item, index) in keyMapping" :key="item.en">
 				<div class="swipe-item">
 					<div class="cat-container overflowauto">
 						<div
 							v-for="(catItem, catIndex) in categories[item.en]"
-							:key="catIndex"
+							:key="catItem._id"
 							class="cat-item"
 							:class="{ 'cat-item-active': activeSwipeKey[index] === catIndex }"
 							@click="onSwipeTabChange(index, catIndex)"
@@ -34,8 +34,8 @@
 					<div class="rank-container overflowauto">
 						<div
 							class="rank-item"
-							v-for="(rankItem, rankIndex) in rankList[index].books"
-							:key="rankIndex"
+							v-for="rankItem in rankList[index].books"
+							:key="rankItem._id"
 							@click="onToBookDetail(rankItem._id)"
 						>
 							<coverImage class="rank-image" :path="rankItem.cover" />
@@ -44,7 +44,7 @@
 								<div class="rank-author">{{ rankItem.author }}</div>
 								<div class="rank-desc">{{ rankItem.shortIntro }}</div>
 								<div>
-									<van-tag plain>
+									<van-tag class="page-tag" plain>
 										{{ rankItem.minorCate }}
 									</van-tag>
 								</div>
@@ -65,24 +65,24 @@ import { getRankCategories, getRankList } from '@/axios';
 
 const router = useRouter();
 
-const keyMapping = ref({
-	0: {
+const keyMapping = [
+	{
 		en: 'male',
 		zh: '男生',
 	},
-	1: {
+	{
 		en: 'female',
 		zh: '女生',
 	},
-	2: {
+	{
 		en: 'picture',
 		zh: '标签',
 	},
-	3: {
+	{
 		en: 'epub',
 		zh: 'epub',
 	},
-});
+];
 
 // 当前分类
 let activeKey = ref(0);
@@ -95,7 +95,7 @@ let rankList = ref([{}, {}, {}, {}]);
 
 const rankId = computed(() => {
 	const activeCat =
-		categories.value[keyMapping.value[activeKey.value].en][
+		categories.value[keyMapping[activeKey.value].en][
 			activeSwipeKey.value[activeKey.value]
 		];
 	return activeCat._id;
@@ -108,8 +108,7 @@ const onGetRankCategories = async () => {
 		if (res.ok) {
 			categories.value = res || {};
 			for (let i = 0; i < 4; i++) {
-				const id = ((categories.value[keyMapping.value[i].en] || [])[0] || {})
-					._id;
+				const id = ((categories.value[keyMapping[i].en] || [])[0] || {})._id;
 				await onGetRankList(i, id);
 			}
 		}

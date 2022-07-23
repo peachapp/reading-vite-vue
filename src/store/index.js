@@ -8,22 +8,21 @@ export default createStore({
     imgTarget: "http://statics.zhuishushenqi.com",
     bookshelfList: [], // 书架
     keyWords: [], // 历史搜索
+    chapterIndexs: {}, // 书籍章节index
   },
   mutations: {
-    update_categories(state, data) {
-      state.categories = data || [];
-    },
-    update_hotSearch(state, data) {
-      state.hotSearch = data || [];
-    },
     update_bookshelfList(state, data) {
       state.bookshelfList = data || [];
     },
     update_keyWords(state, data) {
       state.keyWords = data || [];
+    },
+    update_chapterIndexs(state, data) {
+      state.chapterIndexs = data || {};
     }
   },
   actions: {
+    // 书架
     async onGetBookshelfList({ commit }) {
       try {
         const res = await yuxStorage.getItem('bookshelfList');
@@ -40,6 +39,7 @@ export default createStore({
         console.log(error);
       }
     },
+    // 历史搜索
     async onGetKeyWords({ commit }) {
       try {
         const res = await yuxStorage.getItem('keyWords');
@@ -52,6 +52,23 @@ export default createStore({
       try {
         await yuxStorage.setItem('keyWords', data);
         commit("update_keyWords", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // 书籍章节index
+    async onGetChapterIndexs({ commit }) {
+      try {
+        const res = await yuxStorage.getItem('chapterIndexs');
+        commit("update_chapterIndexs", res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async onSetChapterIndexs({ commit }, data) {
+      try {
+        await yuxStorage.setItem('chapterIndexs', data);
+        commit("update_chapterIndexs", data);
       } catch (error) {
         console.log(error);
       }
